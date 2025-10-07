@@ -1,0 +1,55 @@
+[gd_scene load_steps=9 format=4 uid="uid://03faniklx1al"]
+
+[ext_resource type="Script" uid="uid://18rh3nlnrpyn" path="res://Game/game.gd" id="1_7raqb"]
+[ext_resource type="Texture2D" uid="uid://1v2ixgu0pqco" path="res://Resources/Skybox.png" id="1_bk3v5"]
+[ext_resource type="PackedScene" uid="uid://by5ae6ufoqsbk" path="res://Player/player.tscn" id="2_1r4le"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_1r4le"]
+panorama = ExtResource("1_bk3v5")
+
+[sub_resource type="Sky" id="Sky_7raqb"]
+sky_material = SubResource("PanoramaSkyMaterial_1r4le")
+
+[sub_resource type="Environment" id="Environment_jcm6v"]
+background_mode = 2
+sky = SubResource("Sky_7raqb")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_1r4le"]
+_surfaces = [{
+"aabb": AABB(-8.924805, -0.14111328, -8.641602, 17.84961, 0.28222656, 17.283203),
+"attribute_data": PackedByteArray("AACAPwAAgD8AAIA/AAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/AAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/AAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/AAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/"),
+"format": 34359738391,
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 36,
+"vertex_data": PackedByteArray("AMwOwQCAEL4ARApBAMwOwQCAEL4ARArBAMwOwQCAED4ARArBAMwOQQCAEL4ARArBAMwOwQCAEL4ARArBAMwOwQCAEL4ARApBAMwOwQCAED4ARArBAMwOwQCAEL4ARArBAMwOQQCAEL4ARArBAMwOwQCAED4ARArBAMwOwQCAED4ARApBAMwOwQCAEL4ARApBAMwOwQCAEL4ARApBAMwOwQCAED4ARApBAMwOQQCAED4ARApBAMwOQQCAED4ARApBAMwOwQCAED4ARApBAMwOwQCAED4ARArBAMwOwQCAEL4ARApBAMwOQQCAEL4ARApBAMwOQQCAEL4ARArBAMwOQQCAED4ARApBAMwOQQCAEL4ARApBAMwOwQCAEL4ARApBAMwOQQCAEL4ARArBAMwOQQCAEL4ARApBAMwOQQCAED4ARApBAMwOQQCAEL4ARArBAMwOQQCAED4ARArBAMwOwQCAED4ARArBAMwOwQCAED4ARArBAMwOQQCAED4ARArBAMwOQQCAED4ARApBAMwOQQCAED4ARApBAMwOQQCAED4ARArBAMwOQQCAEL4ARArBAAD/f/9//n8AAP9//3/+fwAA/3//f/5//38AAP//AAD/fwAA//8AAP9/AAD//wAA/////wAA/z//////AAD/P/////8AAP8/AAD/f/9//n8AAP9//3/+fwAA/3//f/5//3//fwAA/z//f/9/AAD/P/9//38AAP8//3//////AAD/f/////8AAP9//////wAA/38AAP//AAD/fwAA//8AAP9/AAD//wAA/3//fwAA/z//f/9/AAD/P/9//38AAP8/////f/9//n////9//3/+f////3//f/5//////wAA/z//////AAD/P/////8AAP8//3//////AAD/f/////8AAP9//////wAA////f/9//n////9//3/+f////3//f/5/")
+}]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_7raqb"]
+data = PackedVector3Array(-8.924805, -0.14111328, 8.641602, -8.924805, -0.14111328, -8.641602, -8.924805, 0.14111328, -8.641602, 8.924805, -0.14111328, -8.641602, -8.924805, -0.14111328, -8.641602, -8.924805, -0.14111328, 8.641602, -8.924805, 0.14111328, -8.641602, -8.924805, -0.14111328, -8.641602, 8.924805, -0.14111328, -8.641602, -8.924805, 0.14111328, -8.641602, -8.924805, 0.14111328, 8.641602, -8.924805, -0.14111328, 8.641602, -8.924805, -0.14111328, 8.641602, -8.924805, 0.14111328, 8.641602, 8.924805, 0.14111328, 8.641602, 8.924805, 0.14111328, 8.641602, -8.924805, 0.14111328, 8.641602, -8.924805, 0.14111328, -8.641602, -8.924805, -0.14111328, 8.641602, 8.924805, -0.14111328, 8.641602, 8.924805, -0.14111328, -8.641602, 8.924805, 0.14111328, 8.641602, 8.924805, -0.14111328, 8.641602, -8.924805, -0.14111328, 8.641602, 8.924805, -0.14111328, -8.641602, 8.924805, -0.14111328, 8.641602, 8.924805, 0.14111328, 8.641602, 8.924805, -0.14111328, -8.641602, 8.924805, 0.14111328, -8.641602, -8.924805, 0.14111328, -8.641602, -8.924805, 0.14111328, -8.641602, 8.924805, 0.14111328, -8.641602, 8.924805, 0.14111328, 8.641602, 8.924805, 0.14111328, 8.641602, 8.924805, 0.14111328, -8.641602, 8.924805, -0.14111328, -8.641602)
+
+[node name="Game" type="Node3D"]
+script = ExtResource("1_7raqb")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.86515146, -0.42060226, 0.27314228, 0, 0.544639, 0.8386706, -0.5015107, 0.7255771, -0.47119522, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_jcm6v")
+
+[node name="World" type="Node3D" parent="."]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="World"]
+
+[node name="CSGBakedMeshInstance3D" type="MeshInstance3D" parent="World/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.16875237, 0)
+mesh = SubResource("ArrayMesh_1r4le")
+
+[node name="CSGBakedCollisionShape3D" type="CollisionShape3D" parent="World/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.16875237, 0)
+shape = SubResource("ConcavePolygonShape3D_7raqb")
+
+[node name="Player" parent="." instance=ExtResource("2_1r4le")]
