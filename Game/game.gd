@@ -1,7 +1,6 @@
 extends Node3D
 
 
-@onready var world: Node3D = $World
 @onready var player: Player = $Player
 
 

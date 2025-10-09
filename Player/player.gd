@@ -47,6 +47,8 @@ signal shooting(pos: Vector3, direction: Vector3)
 @onready var anim_path_backwards: StringName = &"parameters/state_machine/locomotion/backwards/blend_position"
 @onready var step_sound: AudioStreamPlayer3D = $"Step Sound"
 
+@onready var interaction_ray: RayCast3D = $"Camera Gymbal/Interaction Ray"
+
 var direction: Vector3 = Vector3.ZERO
 
 var anim_movement: Vector2 = Vector2.ZERO
@@ -113,6 +115,8 @@ func _input(event: InputEvent) -> void:
 			if position_offset.spring_length < 0.2:
 				position_offset.spring_length = 0.0
 				model.hide()
+	if event.is_action_pressed("interaction") and interaction_ray.is_colliding():
+		print("Works")
 
 
 func _physics_process(delta: float) -> void:
