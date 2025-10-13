@@ -2,6 +2,12 @@
 
 [ext_resource type="Script" uid="uid://b21veu5i2aq7j" path="res://Spaceship/spaceship.gd" id="1_vygr3"]
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_vygr3"]
+size = Vector3(2.2939453, 5.840088, 2.290039)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hl1yu"]
+size = Vector3(8.297119, 0.40405273, 2.0732422)
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_abkd6"]
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_ok8xd"]
@@ -806,160 +812,160 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_wbcum")
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_hl1yu"]
-radius = 0.47070313
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_hl1yu"]
-size = Vector3(2.7773438, 0.103271484, 1)
-
-[node name="Spaceship" type="CharacterBody3D"]
-transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
+[node name="Spaceship" type="RigidBody3D"]
+disable_mode = 2
 collision_layer = 4
 collision_mask = 3
 script = ExtResource("1_vygr3")
 
-[node name="Symmetry_4" type="Node3D" parent="."]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, -0.31889188, 0)
+shape = SubResource("BoxShape3D_vygr3")
 
-[node name="Tube_2" type="MeshInstance3D" parent="Symmetry_4"]
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.26723754, -1.2200029)
+shape = SubResource("BoxShape3D_hl1yu")
+
+[node name="Model" type="Node3D" parent="."]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
+
+[node name="Symmetry_4" type="Node3D" parent="Model"]
+
+[node name="Tube_2" type="MeshInstance3D" parent="Model/Symmetry_4"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.04416544, -0.44001916, 0.53568)
 mesh = SubResource("ArrayMesh_8y1na")
 skeleton = NodePath("")
 
-[node name="Cylinder_1" type="MeshInstance3D" parent="."]
+[node name="Cylinder_1" type="MeshInstance3D" parent="Model"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.4064104e-05, -0.44, 0.5356812)
 mesh = SubResource("ArrayMesh_fjxl0")
 skeleton = NodePath("")
 
-[node name="Cube_2" type="MeshInstance3D" parent="."]
+[node name="Cube_2" type="MeshInstance3D" parent="Model"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.17259967, 0.46313933)
 mesh = SubResource("ArrayMesh_5e4yx")
 skeleton = NodePath("")
 
-[node name="Torus_4" type="MeshInstance3D" parent="."]
+[node name="Torus_4" type="MeshInstance3D" parent="Model"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.28954703, -0.42256868, -0.16468176)
 mesh = SubResource("ArrayMesh_0rasg")
 skeleton = NodePath("")
 
-[node name="Cube_1" type="MeshInstance3D" parent="."]
+[node name="Cube_1" type="MeshInstance3D" parent="Model"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0040952535, -0.09711415, -0.60201025)
 mesh = SubResource("ArrayMesh_x3ygf")
 skeleton = NodePath("")
 
-[node name="Symmetry_3" type="Node3D" parent="."]
+[node name="Symmetry_3" type="Node3D" parent="Model"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.040466)
 
-[node name="Cube_1_2" type="MeshInstance3D" parent="Symmetry_3"]
+[node name="Cube_1_2" type="MeshInstance3D" parent="Model/Symmetry_3"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1105981, -0.13306111, -0.66040695)
 mesh = SubResource("ArrayMesh_yo8r4")
 skeleton = NodePath("")
 
-[node name="Symmetry_2" type="Node3D" parent="."]
+[node name="Symmetry_2" type="Node3D" parent="Model"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.11345286, 0.040466)
 
-[node name="Null" type="Node3D" parent="Symmetry_2"]
+[node name="Null" type="Node3D" parent="Model/Symmetry_2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.11215941, -0.1094726, -0.71817)
 
-[node name="Sweep" type="MeshInstance3D" parent="Symmetry_2/Null"]
+[node name="Sweep" type="MeshInstance3D" parent="Model/Symmetry_2/Null"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.025051862, -0.045885455, -0.072103)
 mesh = SubResource("ArrayMesh_j8p2t")
 skeleton = NodePath("")
 
-[node name="Cube_1_3" type="MeshInstance3D" parent="Symmetry_2/Null"]
+[node name="Cube_1_3" type="MeshInstance3D" parent="Model/Symmetry_2/Null"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.025051862, 0.045885455, 0.072103)
 mesh = SubResource("ArrayMesh_k80q6")
 skeleton = NodePath("")
 
-[node name="Cube" type="MeshInstance3D" parent="."]
+[node name="Cube" type="MeshInstance3D" parent="Model"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2018055, -0.21892457)
 mesh = SubResource("ArrayMesh_lk68o")
 skeleton = NodePath("")
 
-[node name="Symmetry_1" type="Node3D" parent="."]
+[node name="Symmetry_1" type="Node3D" parent="Model"]
 
-[node name="Cube_1_4" type="MeshInstance3D" parent="Symmetry_1"]
+[node name="Cube_1_4" type="MeshInstance3D" parent="Model/Symmetry_1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.28, -0.19, -0.26943025)
 mesh = SubResource("ArrayMesh_ghk5q")
 skeleton = NodePath("")
 
-[node name="Cylinder" type="MeshInstance3D" parent="."]
+[node name="Cylinder" type="MeshInstance3D" parent="Model"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.013131854)
 mesh = SubResource("ArrayMesh_xhlb2")
 skeleton = NodePath("")
 
-[node name="Symmetry" type="Node3D" parent="."]
+[node name="Symmetry" type="Node3D" parent="Model"]
 
-[node name="L_Wing" type="Node3D" parent="Symmetry"]
+[node name="L_Wing" type="Node3D" parent="Model/Symmetry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.44786718, 0.057023805, -0.4006965)
 
-[node name="Tube" type="MeshInstance3D" parent="Symmetry/L_Wing"]
+[node name="Tube" type="MeshInstance3D" parent="Model/Symmetry/L_Wing"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.01844, 0.0114, 0.34125)
 mesh = SubResource("ArrayMesh_c26xi")
 skeleton = NodePath("")
 
-[node name="Cube_2_2" type="MeshInstance3D" parent="Symmetry/L_Wing"]
+[node name="Cube_2_2" type="MeshInstance3D" parent="Model/Symmetry/L_Wing"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4235628, -0.09394835, 0.40486652)
 mesh = SubResource("ArrayMesh_flo27")
 skeleton = NodePath("")
 
-[node name="Cube_1_5" type="MeshInstance3D" parent="Symmetry/L_Wing"]
+[node name="Cube_1_5" type="MeshInstance3D" parent="Model/Symmetry/L_Wing"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4240495, -0.06821761, 0.8246852)
 mesh = SubResource("ArrayMesh_k8tdl")
 skeleton = NodePath("")
 
-[node name="Cylinder_4" type="MeshInstance3D" parent="Symmetry/L_Wing"]
+[node name="Cylinder_4" type="MeshInstance3D" parent="Model/Symmetry/L_Wing"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.42356148, -0.09461421, 0.8210317)
 mesh = SubResource("ArrayMesh_kwbud")
 skeleton = NodePath("")
 
-[node name="Cylinder_1_2" type="MeshInstance3D" parent="Symmetry/L_Wing"]
+[node name="Cylinder_1_2" type="MeshInstance3D" parent="Model/Symmetry/L_Wing"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.42356148, -0.09461421, 0.44772652)
 mesh = SubResource("ArrayMesh_xtm8d")
 skeleton = NodePath("")
 
-[node name="Cube_2_3" type="MeshInstance3D" parent="Symmetry/L_Wing"]
+[node name="Cube_2_3" type="MeshInstance3D" parent="Model/Symmetry/L_Wing"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4207642, -0.10586506, 0.25889608)
 mesh = SubResource("ArrayMesh_4selo")
 skeleton = NodePath("")
 
-[node name="Cylinder_3" type="MeshInstance3D" parent="Symmetry/L_Wing"]
+[node name="Cylinder_3" type="MeshInstance3D" parent="Model/Symmetry/L_Wing"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4244385, -0.09638881, 0.25754315)
 mesh = SubResource("ArrayMesh_ok4bj")
 skeleton = NodePath("")
 
-[node name="Tube_4" type="MeshInstance3D" parent="Symmetry/L_Wing"]
+[node name="Tube_4" type="MeshInstance3D" parent="Model/Symmetry/L_Wing"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0184372, 0.011396196, 0.3412465)
 mesh = SubResource("ArrayMesh_6ynrc")
 skeleton = NodePath("")
 
-[node name="Tube_3" type="MeshInstance3D" parent="Symmetry/L_Wing"]
+[node name="Tube_3" type="MeshInstance3D" parent="Model/Symmetry/L_Wing"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0184372, 0.011396196, -0.32126322)
 mesh = SubResource("ArrayMesh_r0kpc")
 skeleton = NodePath("")
 
-[node name="Tube_1" type="MeshInstance3D" parent="Symmetry/L_Wing"]
+[node name="Tube_1" type="MeshInstance3D" parent="Model/Symmetry/L_Wing"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0184372, 0.011396196, 0.4383094)
 mesh = SubResource("ArrayMesh_6251e")
 skeleton = NodePath("")
 
-[node name="Tube_2_2" type="MeshInstance3D" parent="Symmetry/L_Wing"]
+[node name="Tube_2_2" type="MeshInstance3D" parent="Model/Symmetry/L_Wing"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0184372, 0.011396196, -0.41130844)
 mesh = SubResource("ArrayMesh_6tf5l")
 skeleton = NodePath("")
 
-[node name="Cylinder_2" type="MeshInstance3D" parent="Symmetry/L_Wing"]
+[node name="Cylinder_2" type="MeshInstance3D" parent="Model/Symmetry/L_Wing"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.018432474, 0.011397291, -0.05117123)
 mesh = SubResource("ArrayMesh_8o7dn")
 skeleton = NodePath("")
 
-[node name="Cube_3" type="MeshInstance3D" parent="Symmetry/L_Wing"]
+[node name="Cube_3" type="MeshInstance3D" parent="Model/Symmetry/L_Wing"]
 transform = Transform3D(0.8605873, 0.509303, 0, -0.509303, 0.8605873, 0, 0, 0, 1, 0.092181265, -0.056982074, 0.004186983)
 mesh = SubResource("ArrayMesh_bahjs")
 skeleton = NodePath("")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, -0.010306239, 0)
-shape = SubResource("CapsuleShape3D_hl1yu")
-
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.10279061, -0.40040487)
-shape = SubResource("BoxShape3D_hl1yu")
+[node name="Camera" type="Camera3D" parent="Model"]
+transform = Transform3D(-1, -7.172753e-15, -8.742276e-08, -2.2626681e-08, 0.9659259, 0.258819, 8.4443904e-08, 0.258819, -0.9659259, 0, 0.9178283, -1.7477201)

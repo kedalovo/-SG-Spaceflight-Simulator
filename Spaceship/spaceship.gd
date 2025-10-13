@@ -1,30 +1,28 @@
-extends CharacterBody3D
+extends RigidBody3D
 
 
-const SPEED = 5.0
-const ASCEND_VELOCITY = 4.5
+@onready var camera: Camera3D = $Model/Camera
+
+
+const SPEED = 20.0
+const ASCEND_VELOCITY = 15.0
 
 var is_controlled: bool = false
 
 
 func _physics_process(delta: float) -> void:
-	# Add the gravity.
-	if not is_on_floor():
-		velocity += get_gravity() * delta
+	if is_controlled:
+		if Input.is_action_pressed("move_jump"):
+			apply_central_impulse(Vector3.UP * delta * ASCEND_VELOCITY)
+		if Input.is_action_pressed("move_forward"):
+			apply_central_impulse(Vector3.FORWARD * delta * SPEED)
+		if Input.is_action_pressed("move_back"):
+			apply_central_impulse(Vector3.BACK * delta * SPEED)
+		if Input.is_action_pressed("move_left"):
+			apply_central_impulse(Vector3.LEFT * delta * SPEED)
+		if Input.is_action_pressed("move_right"):
+			apply_central_impulse(Vector3.RIGHT * delta * SPEED)
 
-	# Handle jump.
-	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
-		velocity.y += ASCEND_VELOCITY
 
-	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
-	var input_dir := Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
-	var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
-	if direction and is_controlled:
-		velocity.x = direction.x * SPEED
-		velocity.z = direction.z * SPEED
-	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
-		velocity.z = move_toward(velocity.z, 0, SPEED)
-
-	move_and_slide()
+func toggle_camera(on: bool) -> void:
+	camera.current = on

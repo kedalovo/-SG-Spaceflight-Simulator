@@ -5,6 +5,8 @@ class_name Player
 
 
 signal shooting(pos: Vector3, direction: Vector3)
+signal enter_ship
+signal exit_ship
 
 
 @export var speed: float = 5.0
@@ -46,6 +48,7 @@ signal shooting(pos: Vector3, direction: Vector3)
 @onready var anim_path_walking: StringName = &"parameters/state_machine/locomotion/walking/blend_position"
 @onready var anim_path_backwards: StringName = &"parameters/state_machine/locomotion/backwards/blend_position"
 @onready var step_sound: AudioStreamPlayer3D = $"Step Sound"
+@onready var collision: CollisionShape3D = $Collision
 
 @onready var interaction_ray: RayCast3D = $"Camera Gymbal/Interaction Ray"
 
@@ -82,13 +85,15 @@ var has_landed: bool = false
 var can_shoot: bool = true
 var has_stepped: bool = false
 
+var is_in_ship: bool = false
+
 
 func _ready() -> void:
 	model.hide()
 
 
 func _input(event: InputEvent) -> void:
-	if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
+	if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED and !is_in_ship:
 		if is_in_gravity:
 			target_rot.x += deg_to_rad(-event.screen_relative.y) * in_gravity_mouse_sensitivity
 			target_rot.y += deg_to_rad(-event.screen_relative.x) * in_gravity_mouse_sensitivity
@@ -99,7 +104,7 @@ func _input(event: InputEvent) -> void:
 			var final_x_rotation = camera_gymbal.rotation.x + deg_to_rad(-event.screen_relative.y) * mouse_sensitivity
 			if final_x_rotation > deg_to_rad(min_head_angle) and final_x_rotation < deg_to_rad(max_head_angle):
 				camera_gymbal.rotation.x = final_x_rotation
-	if event is InputEventMouseButton and Input.mouse_mode == Input.MouseMode.MOUSE_MODE_CAPTURED:
+	if event is InputEventMouseButton and Input.mouse_mode == Input.MouseMode.MOUSE_MODE_CAPTURED and !is_in_ship:
 		var e := event as InputEventMouseButton
 		if e.is_pressed() and e.button_index == MOUSE_BUTTON_LEFT and can_shoot:
 			can_shoot = false
@@ -115,8 +120,11 @@ func _input(event: InputEvent) -> void:
 			if position_offset.spring_length < 0.2:
 				position_offset.spring_length = 0.0
 				model.hide()
-	if event.is_action_pressed("interaction") and interaction_ray.is_colliding():
-		print("Works")
+	if event.is_action_pressed("interaction"):
+		if !is_in_ship and interaction_ray.is_colliding():
+			enter_ship.emit()
+		elif is_in_ship:
+			exit_ship.emit()
 
 
 func _physics_process(delta: float) -> void:
@@ -254,6 +262,10 @@ func _physics_process(delta: float) -> void:
 	#endregion
 
 
+func disable_collision(on: bool) -> void:
+	collision.set_deferred("disabled", on)
+
+
 func jump() -> void:
 	has_started_jumping = true
 	velocity.y = jump_velocity * 0.5
@@ -282,6 +294,8 @@ func stop_jumping() -> void:
 
 
 func play_step() -> void:
+	if is_in_ship:
+		return
 	if has_stepped:
 		has_stepped = false
 		step_sound.pitch_scale = 1.0
@@ -299,7 +313,7 @@ func _on_shoot_timer_timeout() -> void:
 	can_shoot = true
 
 
-func _on_junk_detector_body_entered(body: Node3D) -> void:
+func _on_junk_detector_body_entered(_body: Node3D) -> void:
 	pass
 	#if body is Junk:
 		#velocity -= velocity * 0.5
