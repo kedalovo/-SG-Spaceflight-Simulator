@@ -65,7 +65,7 @@ offset_right = 40.0
 offset_bottom = 23.0
 
 [node name="Spaceship" parent="." instance=ExtResource("4_jcm6v")]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -0.009091854, 2, -6.130127)
+transform = Transform3D(-0.7071067, 0, -0.7071068, 0, 1, 0, 0.7071068, 0, -0.7071067, -0.009091854, 3, -6.130127)
 
 [connection signal="enter_ship" from="Player" to="." method="_on_player_enter_ship"]
 [connection signal="exit_ship" from="Player" to="." method="_on_player_exit_ship"]

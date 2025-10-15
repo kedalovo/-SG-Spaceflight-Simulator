@@ -816,6 +816,8 @@ shadow_mesh = SubResource("ArrayMesh_wbcum")
 disable_mode = 2
 collision_layer = 4
 collision_mask = 3
+can_sleep = false
+angular_damp = 1.0
 script = ExtResource("1_vygr3")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -969,3 +971,23 @@ skeleton = NodePath("")
 
 [node name="Camera" type="Camera3D" parent="Model"]
 transform = Transform3D(-1, -7.172753e-15, -8.742276e-08, -2.2626681e-08, 0.9659259, 0.258819, 8.4443904e-08, 0.258819, -0.9659259, 0, 0.9178283, -1.7477201)
+
+[node name="Markers" type="Node3D" parent="."]
+
+[node name="Front Marker" type="Marker3D" parent="Markers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3)
+
+[node name="Back Marker" type="Marker3D" parent="Markers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3)
+
+[node name="Left Marker" type="Marker3D" parent="Markers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 0)
+
+[node name="Right Marker" type="Marker3D" parent="Markers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, 0)
+
+[node name="Top Marker" type="Marker3D" parent="Markers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+
+[node name="Bottom Marker" type="Marker3D" parent="Markers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3, 0)
