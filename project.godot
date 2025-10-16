@@ -78,10 +78,12 @@ move_down={
 3d_physics/layer_1="World"
 3d_physics/layer_2="Player"
 3d_physics/layer_3="Spaceship"
+3d_physics/layer_4="Gravity Field"
 
 [physics]
 
 3d/physics_engine="Jolt Physics"
+3d/default_gravity=0.0
 
 [rendering]
 

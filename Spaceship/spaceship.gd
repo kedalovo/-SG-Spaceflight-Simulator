@@ -1,17 +1,21 @@
 extends RigidBody3D
 
 
-@onready var camera: Camera3D = $Model/Camera
+@onready var camera: Camera3D = $"Model/Camera Offset/Camera"
 @onready var front_marker: Marker3D = $"Markers/Front Marker"
 @onready var back_marker: Marker3D = $"Markers/Back Marker"
 @onready var left_marker: Marker3D = $"Markers/Left Marker"
 @onready var right_marker: Marker3D = $"Markers/Right Marker"
 @onready var top_marker: Marker3D = $"Markers/Top Marker"
 @onready var bottom_marker: Marker3D = $"Markers/Bottom Marker"
+@onready var camera_offset: SpringArm3D = $"Model/Camera Offset"
 
 
 @export var mouse_sensitivity: float = 0.07
 @export var rotation_speed: float = 0.2
+@export var zoom_force: float = 0.2
+@export var zoom_max: float = 7.0
+@export var zoom_min: float = 2.0
 
 const SPEED = 2.0
 const ASCEND_VELOCITY = 5.0
@@ -27,6 +31,13 @@ func _input(event: InputEvent) -> void:
 		target_rot.x += deg_to_rad(-event.screen_relative.y) * mouse_sensitivity
 		target_rot.y += deg_to_rad(-event.screen_relative.x) * mouse_sensitivity
 		target_rot = clamp(target_rot, Vector2(-90.0, -90.0), Vector2(90.0, 90.0))
+	if event is InputEventMouseButton and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED and is_controlled:
+		if event.is_pressed() and event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+			camera_offset.spring_length = clampf(camera_offset.spring_length + zoom_force, zoom_min, zoom_max)
+		if event.is_pressed() and event.button_index == MOUSE_BUTTON_WHEEL_UP:
+			camera_offset.spring_length = clampf(camera_offset.spring_length - zoom_force, zoom_min, zoom_max)
+			if camera_offset.spring_length < 1.2:
+				camera_offset.spring_length = 1.0
 
 
 func _physics_process(delta: float) -> void:
@@ -50,8 +61,6 @@ func _physics_process(delta: float) -> void:
 		
 		apply_torque_impulse((global_position - left_marker.global_position) * target_rot.x * delta)
 		apply_torque_impulse((global_position - bottom_marker.global_position) * target_rot.y * delta)
-		#rotate_object_local(Vector3.LEFT, target_rot.x * delta)
-		#rotate_object_local(Vector3.UP, target_rot.y * delta)
 		target_rot.x -= target_rot.x * delta * 2.0
 		target_rot.y -= target_rot.y * delta * 2.0
 

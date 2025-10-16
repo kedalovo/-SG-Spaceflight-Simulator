@@ -1,0 +1,51 @@
+[gd_scene load_steps=6 format=3 uid="uid://qc706voncvlu"]
+
+[ext_resource type="Script" uid="uid://bb1ghhy7ktugd" path="res://Gravity Field/gravity_field.gd" id="1_uoc06"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_uoc06"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_geodj"]
+transparency = 1
+vertex_color_use_as_albedo = true
+albedo_color = Color(1, 0.631373, 0, 1)
+emission = Color(1, 0.631373, 0, 1)
+emission_energy_multiplier = 100.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_pmoko"]
+material = SubResource("StandardMaterial3D_geodj")
+radius = 0.08
+height = 0.16
+radial_segments = 8
+rings = 4
+
+[sub_resource type="Gradient" id="Gradient_pmoko"]
+offsets = PackedFloat32Array(0, 0.3, 0.7, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+metadata/_snap_enabled = true
+
+[node name="Gravity Field" type="Node3D"]
+script = ExtResource("1_uoc06")
+
+[node name="Area" type="Area3D" parent="."]
+collision_layer = 8
+collision_mask = 6
+gravity_space_override = 3
+
+[node name="Collision" type="CollisionShape3D" parent="Area"]
+shape = SubResource("BoxShape3D_uoc06")
+
+[node name="Particles" type="CPUParticles3D" parent="."]
+amount = 30
+lifetime = 10.0
+mesh = SubResource("SphereMesh_pmoko")
+emission_shape = 3
+emission_box_extents = Vector3(0.5, 0.5, 0.5)
+direction = Vector3(0, 0, 0)
+spread = 180.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 0.1
+initial_velocity_max = 0.2
+color_ramp = SubResource("Gradient_pmoko")
+
+[connection signal="body_entered" from="Area" to="." method="_on_area_body_entered"]
+[connection signal="body_exited" from="Area" to="." method="_on_area_body_exited"]

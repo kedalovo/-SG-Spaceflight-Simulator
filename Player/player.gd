@@ -62,18 +62,18 @@ var checkpoint: Vector3 = Vector3(0.0, 3.0, 0.0)
 
 var additional_speed: float = 0.0
 
-var _is_in_gravity: bool = false
+var _is_in_gravity: bool = true
 
-var is_in_gravity: bool = false:
+var is_in_gravity: bool = true:
 	get:
 		return _is_in_gravity
 	set(v):
 		_is_in_gravity = v
 		is_in_gravity = v
 		if v:
-			motion_mode = CharacterBody3D.MOTION_MODE_FLOATING
-		else:
 			motion_mode = CharacterBody3D.MOTION_MODE_GROUNDED
+		else:
+			motion_mode = CharacterBody3D.MOTION_MODE_FLOATING
 		toggle_gravity(v)
 
 var is_moving: bool = false
@@ -94,7 +94,7 @@ func _ready() -> void:
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED and !is_in_ship:
-		if is_in_gravity:
+		if !is_in_gravity:
 			target_rot.x += deg_to_rad(-event.screen_relative.y) * in_gravity_mouse_sensitivity
 			target_rot.y += deg_to_rad(-event.screen_relative.x) * in_gravity_mouse_sensitivity
 			target_rot = clamp(target_rot, Vector2(-90.0, -90.0), Vector2(90.0, 90.0))
@@ -147,7 +147,7 @@ func _physics_process(delta: float) -> void:
 			has_landed = false
 			coyote_timer.start()
 		velocity += get_gravity() * delta
-		if is_in_gravity:
+		if !is_in_gravity:
 			has_jumped = false
 			has_landed = false
 			anim_playback.travel(&"floating")
@@ -159,7 +159,7 @@ func _physics_process(delta: float) -> void:
 
 	#region Handle jump.
 	
-	if Input.is_action_just_pressed(&"move_jump") and (is_on_floor() or is_coyote_time) and !is_in_gravity:
+	if Input.is_action_just_pressed(&"move_jump") and (is_on_floor() or is_coyote_time) and is_in_gravity:
 		anim_playback.travel(&"jumping")
 	if Input.is_action_pressed(&"move_jump"):
 		if has_started_jumping and velocity.y < jump_velocity:
@@ -173,9 +173,9 @@ func _physics_process(delta: float) -> void:
 	
 	#region Rotation (Z) in zero gravity
 	
-	if Input.is_action_pressed(&"rotate_clockwise") and is_in_gravity:
+	if Input.is_action_pressed(&"rotate_clockwise") and !is_in_gravity:
 		rotation.z -= delta / 2
-	if Input.is_action_pressed(&"rotate_counter_clockwise") and is_in_gravity:
+	if Input.is_action_pressed(&"rotate_counter_clockwise") and !is_in_gravity:
 		rotation.z += delta / 2
 	
 	#endregion
@@ -202,7 +202,7 @@ func _physics_process(delta: float) -> void:
 	anim_tree.set(anim_path_walking, anim_movement)
 	anim_tree.set(anim_path_running, anim_movement)
 	
-	if Input.is_action_pressed(&"move_sprint") and !is_in_gravity and anim_movement.y <= 0:
+	if Input.is_action_pressed(&"move_sprint") and is_in_gravity and anim_movement.y <= 0:
 		if !is_running:
 			is_running = true
 			anim_locomotion_playback.travel(&"running")
@@ -217,7 +217,7 @@ func _physics_process(delta: float) -> void:
 	direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	
 	if direction:
-		if is_in_gravity:
+		if !is_in_gravity:
 			velocity = velocity.move_toward(direction * max_speed, delta * acceleration * gravity_control)
 		else:
 			var new_velocity: Vector2 = Vector2(velocity.x, velocity.z)
@@ -229,7 +229,7 @@ func _physics_process(delta: float) -> void:
 			velocity.x = new_velocity.x
 			velocity.z = new_velocity.y
 	else:
-		if is_in_gravity:
+		if !is_in_gravity:
 			velocity = velocity.move_toward(Vector3.ZERO, delta * acceleration * gravity_control)
 		else:
 			var new_velocity: Vector2 = Vector2(velocity.x, velocity.z)
@@ -244,7 +244,7 @@ func _physics_process(delta: float) -> void:
 
 	#region Handling rotation interpolation while in zero gravity
 	
-	if is_in_gravity:
+	if !is_in_gravity:
 		rotate_object_local(Vector3.RIGHT, target_rot.x * delta)
 		rotate_object_local(Vector3.UP, target_rot.y * delta)
 		target_rot.x -= target_rot.x * delta * 2.0
@@ -256,7 +256,7 @@ func _physics_process(delta: float) -> void:
 	#region Bounce off collisions while in zero gravity
 	
 	var col := move_and_slide()
-	if col and is_in_gravity:
+	if col and !is_in_gravity:
 		velocity = velocity.bounce(get_last_slide_collision().get_normal()) * bounce_factor
 	
 	#endregion
@@ -273,12 +273,12 @@ func jump() -> void:
 
 func toggle_gravity(on: bool) -> void:
 	if on:
-		get_tree().create_tween().tween_property(self, "rotation:x", camera_gymbal.rotation.x, 0.5).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
-		get_tree().create_tween().tween_property(camera_gymbal, "rotation:x", 0.0, 0.5).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
-	else:
 		get_tree().create_tween().tween_property(camera_gymbal, "rotation:x", rotation.x, 0.5).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
 		get_tree().create_tween().tween_property(self, "rotation:x", 0.0, 0.5).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
 		get_tree().create_tween().tween_property(self, "rotation:z", 0.0, 0.5).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
+	else:
+		get_tree().create_tween().tween_property(self, "rotation:x", camera_gymbal.rotation.x, 0.5).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
+		get_tree().create_tween().tween_property(camera_gymbal, "rotation:x", 0.0, 0.5).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
 
 
 func reset() -> void:
