@@ -43,24 +43,24 @@ func _input(event: InputEvent) -> void:
 func _physics_process(delta: float) -> void:
 	if is_controlled:
 		if Input.is_action_pressed("move_sprint"):
-			apply_central_impulse((top_marker.global_position - global_position) * delta * ASCEND_VELOCITY)
+			apply_central_impulse((top_marker.global_position - global_position) * delta * ASCEND_VELOCITY * mass)
 		if Input.is_action_pressed("move_forward"):
-			apply_central_impulse((front_marker.global_position - global_position) * delta * SPEED)
+			apply_central_impulse((front_marker.global_position - global_position) * delta * SPEED * mass)
 		if Input.is_action_pressed("move_back"):
-			apply_central_impulse((back_marker.global_position - global_position) * delta * SPEED)
+			apply_central_impulse((back_marker.global_position - global_position) * delta * SPEED * mass)
 		if Input.is_action_pressed("move_left"):
-			apply_central_impulse((left_marker.global_position - global_position) * delta * SPEED)
+			apply_central_impulse((left_marker.global_position - global_position) * delta * SPEED * mass)
 		if Input.is_action_pressed("move_right"):
-			apply_central_impulse((right_marker.global_position - global_position) * delta * SPEED)
+			apply_central_impulse((right_marker.global_position - global_position) * delta * SPEED * mass)
 		if Input.is_action_pressed("move_down"):
-			apply_central_impulse((bottom_marker.global_position - global_position) * delta * SPEED)
+			apply_central_impulse((bottom_marker.global_position - global_position) * delta * SPEED * mass)
 		if Input.is_action_pressed("rotate_clockwise"):
-			apply_torque_impulse((global_position - back_marker.global_position) * rotation_speed * delta)
+			apply_torque_impulse((global_position - back_marker.global_position) * rotation_speed * delta * mass)
 		if Input.is_action_pressed("rotate_counter_clockwise"):
-			apply_torque_impulse((global_position - front_marker.global_position) * rotation_speed * delta)
+			apply_torque_impulse((global_position - front_marker.global_position) * rotation_speed * delta * mass)
 		
-		apply_torque_impulse((global_position - left_marker.global_position) * target_rot.x * delta)
-		apply_torque_impulse((global_position - bottom_marker.global_position) * target_rot.y * delta)
+		apply_torque_impulse((global_position - left_marker.global_position) * target_rot.x * delta * mass)
+		apply_torque_impulse((global_position - bottom_marker.global_position) * target_rot.y * delta * mass)
 		target_rot.x -= target_rot.x * delta * 2.0
 		target_rot.y -= target_rot.y * delta * 2.0
 

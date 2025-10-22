@@ -34,6 +34,9 @@ data = PackedVector3Array(-8.924805, -0.14111328, 8.641602, -8.924805, -0.141113
 
 [node name="Game" type="Node3D"]
 script = ExtResource("1_7raqb")
+asteroid_field_size = Vector3(200, 200, 200)
+asteroid_negative_field_size = Vector3(20, 10, 20)
+asteroid_number = 1000
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.86515146, -0.42060226, 0.27314228, 0, 0.544639, 0.8386706, -0.5015107, 0.7255771, -0.47119522, 0, 0, 0)
@@ -71,6 +74,8 @@ transform = Transform3D(-0.7071067, 0, -0.7071068, 0, 1, 0, 0.7071068, 0, -0.707
 [node name="Gravity Field" parent="." instance=ExtResource("5_fwxkx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4200878, 0)
 field_size = Vector3(17, 5, 17)
+
+[node name="Asteroids" type="Node3D" parent="."]
 
 [connection signal="enter_ship" from="Player" to="." method="_on_player_enter_ship"]
 [connection signal="exit_ship" from="Player" to="." method="_on_player_exit_ship"]
