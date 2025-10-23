@@ -9,6 +9,7 @@ extends RigidBody3D
 @onready var top_marker: Marker3D = $"Markers/Top Marker"
 @onready var bottom_marker: Marker3D = $"Markers/Bottom Marker"
 @onready var camera_offset: SpringArm3D = $"Model/Camera Offset"
+@onready var sphere: CSGSphere3D = $Sphere
 
 
 @export var mouse_sensitivity: float = 0.07
@@ -63,6 +64,7 @@ func _physics_process(delta: float) -> void:
 		apply_torque_impulse((global_position - bottom_marker.global_position) * target_rot.y * delta * mass)
 		target_rot.x -= target_rot.x * delta * 2.0
 		target_rot.y -= target_rot.y * delta * 2.0
+	sphere.position = linear_velocity
 
 
 func toggle_camera(on: bool) -> void:

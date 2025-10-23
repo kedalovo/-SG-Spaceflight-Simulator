@@ -42,8 +42,8 @@ func _input(event: InputEvent) -> void:
 
 
 func _process(_delta: float) -> void:
+	label.text = str(spaceship.linear_velocity)
 	pass
-	#label.text = str(spaceship.is_controlled)
 	#label.text += "\n" + str(spaceship.input_ dir)
 
 
@@ -69,6 +69,8 @@ func _on_player_exit_ship() -> void:
 	player.is_in_ship = false
 	spaceship.is_controlled = false
 	spaceship.toggle_camera(false)
+	player.velocity = spaceship.linear_velocity
+	player.rotation = spaceship.rotation
 	player.set_physics_process(true)
 	player.disable_collision(false)
 	player.position = Vector3(0.0, -0.5, -3.0)

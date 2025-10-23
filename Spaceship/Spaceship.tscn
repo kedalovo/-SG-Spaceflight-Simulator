@@ -1,4 +1,4 @@
-[gd_scene load_steps=76 format=4 uid="uid://cr4oj6qmhpn0u"]
+[gd_scene load_steps=77 format=4 uid="uid://cr4oj6qmhpn0u"]
 
 [ext_resource type="Script" uid="uid://b21veu5i2aq7j" path="res://Spaceship/spaceship.gd" id="1_vygr3"]
 
@@ -812,6 +812,10 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_wbcum")
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_llyuj"]
+shading_mode = 0
+albedo_color = Color(1, 0, 0, 1)
+
 [node name="Spaceship" type="RigidBody3D"]
 disable_mode = 2
 collision_layer = 4
@@ -996,3 +1000,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
 
 [node name="Bottom Marker" type="Marker3D" parent="Markers"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3, 0)
+
+[node name="Sphere" type="CSGSphere3D" parent="."]
+radius = 0.2
+material = SubResource("StandardMaterial3D_llyuj")

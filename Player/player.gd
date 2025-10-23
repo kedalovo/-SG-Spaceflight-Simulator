@@ -84,6 +84,7 @@ var has_jumped: bool = false
 var has_landed: bool = false
 var can_shoot: bool = true
 var has_stepped: bool = false
+var is_free_looking: bool = false
 
 var is_in_ship: bool = false
 
@@ -95,9 +96,14 @@ func _ready() -> void:
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED and !is_in_ship:
 		if !is_in_gravity:
-			target_rot.x += deg_to_rad(-event.screen_relative.y) * in_gravity_mouse_sensitivity
-			target_rot.y += deg_to_rad(-event.screen_relative.x) * in_gravity_mouse_sensitivity
-			target_rot = clamp(target_rot, Vector2(-90.0, -90.0), Vector2(90.0, 90.0))
+			if is_free_looking:
+				camera_gymbal.rotate_object_local(Vector3.RIGHT, -event.screen_relative.y * 0.001)
+				camera_gymbal.rotate_object_local(Vector3.UP, -event.screen_relative.x * 0.001)
+				target_rot = Vector2.ZERO
+			else:
+				target_rot.x += deg_to_rad(-event.screen_relative.y) * in_gravity_mouse_sensitivity
+				target_rot.y += deg_to_rad(-event.screen_relative.x) * in_gravity_mouse_sensitivity
+				target_rot = clamp(target_rot, Vector2(-90.0, -90.0), Vector2(90.0, 90.0))
 		else:
 			rotation.y += deg_to_rad(-event.screen_relative.x) * mouse_sensitivity
 			
@@ -120,11 +126,18 @@ func _input(event: InputEvent) -> void:
 			if position_offset.spring_length < 0.2:
 				position_offset.spring_length = 0.0
 				model.hide()
-	if event.is_action_pressed("interaction"):
+	if Input.is_action_just_pressed("interaction"):
 		if !is_in_ship and interaction_ray.is_colliding():
 			enter_ship.emit()
 		elif is_in_ship:
 			exit_ship.emit()
+	if Input.is_action_pressed("free_look"):
+		is_free_looking = true
+	else:
+		is_free_looking = false
+	if Input.is_action_just_released("free_look"):
+		var tween: Tween = get_tree().create_tween()
+		tween.tween_property(camera_gymbal, "rotation", Vector3.ZERO, 0.5)
 
 
 func _physics_process(delta: float) -> void:
@@ -230,7 +243,8 @@ func _physics_process(delta: float) -> void:
 			velocity.z = new_velocity.y
 	else:
 		if !is_in_gravity:
-			velocity = velocity.move_toward(Vector3.ZERO, delta * acceleration * gravity_control)
+			#velocity = velocity.move_toward(Vector3.ZERO, delta * acceleration * gravity_control)
+			pass
 		else:
 			var new_velocity: Vector2 = Vector2(velocity.x, velocity.z)
 			if is_on_floor():
