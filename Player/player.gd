@@ -96,7 +96,7 @@ func _ready() -> void:
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED and !is_in_ship:
 		if !is_in_gravity:
-			if is_free_looking:
+			if is_free_looking and position_offset.spring_length > 0.0:
 				camera_gymbal.rotate_object_local(Vector3.RIGHT, -event.screen_relative.y * 0.001)
 				camera_gymbal.rotate_object_local(Vector3.UP, -event.screen_relative.x * 0.001)
 				target_rot = Vector2.ZERO
@@ -105,8 +105,10 @@ func _input(event: InputEvent) -> void:
 				target_rot.y += deg_to_rad(-event.screen_relative.x) * in_gravity_mouse_sensitivity
 				target_rot = clamp(target_rot, Vector2(-90.0, -90.0), Vector2(90.0, 90.0))
 		else:
-			rotation.y += deg_to_rad(-event.screen_relative.x) * mouse_sensitivity
-			
+			if is_free_looking and position_offset.spring_length > 0.0:
+				camera_gymbal.rotation.y += deg_to_rad(-event.screen_relative.x) * mouse_sensitivity
+			else:
+				rotation.y += deg_to_rad(-event.screen_relative.x) * mouse_sensitivity
 			var final_x_rotation = camera_gymbal.rotation.x + deg_to_rad(-event.screen_relative.y) * mouse_sensitivity
 			if final_x_rotation > deg_to_rad(min_head_angle) and final_x_rotation < deg_to_rad(max_head_angle):
 				camera_gymbal.rotation.x = final_x_rotation
@@ -137,7 +139,7 @@ func _input(event: InputEvent) -> void:
 		is_free_looking = false
 	if Input.is_action_just_released("free_look"):
 		var tween: Tween = get_tree().create_tween()
-		tween.tween_property(camera_gymbal, "rotation", Vector3.ZERO, 0.5)
+		tween.tween_property(camera_gymbal, "rotation", Vector3.ZERO, 0.6).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 
 
 func _physics_process(delta: float) -> void:
@@ -278,6 +280,10 @@ func _physics_process(delta: float) -> void:
 
 func disable_collision(on: bool) -> void:
 	collision.set_deferred("disabled", on)
+	#if on:
+		#collision.set_deferred("disabled", on)
+	#else:
+		#get_tree().create_timer(0.5).timeout.connect(func(): collision.set_deferred("disabled", on))
 
 
 func jump() -> void:

@@ -74,10 +74,10 @@ func _ready() -> void:
 
 
 func _on_area_body_entered(body: Node3D) -> void:
-	if body is Player:
+	if body is Player or body is Spaceship:
 		body.is_in_gravity = true
 
 
 func _on_area_body_exited(body: Node3D) -> void:
-	if body is Player:
+	if body is Player or body is Spaceship:
 		body.is_in_gravity = false

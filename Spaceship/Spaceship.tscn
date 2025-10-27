@@ -974,11 +974,13 @@ transform = Transform3D(0.8605873, 0.509303, 0, -0.509303, 0.8605873, 0, 0, 0, 1
 mesh = SubResource("ArrayMesh_bahjs")
 skeleton = NodePath("")
 
-[node name="Camera Offset" type="SpringArm3D" parent="Model"]
-transform = Transform3D(-1, 0, 8.742278e-08, 2.262668e-08, 0.9659259, 0.25881904, -8.4443926e-08, 0.25881904, -0.9659259, 0, 0, 0)
+[node name="Camera Gymbal" type="Node3D" parent="Model"]
+
+[node name="Camera Offset" type="SpringArm3D" parent="Model/Camera Gymbal"]
+transform = Transform3D(-1, 0, 8.742278e-08, 2.262668e-08, 0.9659259, 0.25881904, -8.444393e-08, 0.25881904, -0.9659259, 0, 0, 0)
 spring_length = 2.0
 
-[node name="Camera" type="Camera3D" parent="Model/Camera Offset"]
+[node name="Camera" type="Camera3D" parent="Model/Camera Gymbal/Camera Offset"]
 transform = Transform3D(0.33333334, 0, 0, 0, 0.33333334, 0, 0, 0, 0.33333334, 0, 0, 0)
 
 [node name="Markers" type="Node3D" parent="."]
@@ -1004,3 +1006,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3, 0)
 [node name="Sphere" type="CSGSphere3D" parent="."]
 radius = 0.2
 material = SubResource("StandardMaterial3D_llyuj")
+
+[node name="Marker3D" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, -3)
