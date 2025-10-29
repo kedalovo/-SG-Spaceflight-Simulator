@@ -34,6 +34,7 @@ signal exit_ship
 @onready var up_marker: Marker3D = $"Up Marker"
 @onready var shoot_reference: Marker3D = $"Camera Gymbal/Shoot Reference"
 @onready var position_offset: SpringArm3D = $"Camera Gymbal/Position Offset"
+@onready var camera: Camera3D = $"Camera Gymbal/Position Offset/Camera"
 
 @onready var coyote_timer: Timer = $"Coyote Timer"
 @onready var shoot_timer: Timer = $"Shoot Timer"
@@ -233,7 +234,8 @@ func _physics_process(delta: float) -> void:
 	
 	if direction:
 		if !is_in_gravity:
-			velocity = velocity.move_toward(direction * max_speed, delta * acceleration * gravity_control)
+			#velocity = velocity.move_toward(direction * max_speed, delta * acceleration * gravity_control)
+			velocity += direction * delta * max_speed * 0.5
 		else:
 			var new_velocity: Vector2 = Vector2(velocity.x, velocity.z)
 			var new_direction: Vector2 = Vector2(direction.x, direction.z)

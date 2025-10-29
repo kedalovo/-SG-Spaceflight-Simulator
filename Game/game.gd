@@ -5,6 +5,7 @@ extends Node3D
 @onready var spaceship: Spaceship = $Spaceship
 @onready var label: Label = $Control/Label
 @onready var asteroids: Node3D = $Asteroids
+@onready var camera: Camera3D = $Camera
 
 
 const ASTEROID = preload("uid://fpevas20cdlo")
@@ -52,6 +53,7 @@ func quit_game() -> void:
 
 
 func _on_player_enter_ship() -> void:
+	spaceship.toggle_player_mask(false)
 	player.is_in_ship = true
 	spaceship.toggle_camera(true)
 	spaceship.is_controlled = true
@@ -72,8 +74,10 @@ func _on_player_exit_ship() -> void:
 	player.position = Vector3(0.0, -0.5, -5.0)
 	player.reparent(self)
 	player.velocity = spaceship.calculated_velocity * 61.5
-	player.rotation = spaceship.rotation
-	player.set_physics_process(true)
+	player.look_at(spaceship.global_position)
 	player.disable_collision(false)
+	player.set_physics_process(true)
 	player = $Player
+	player.camera.make_current()
 	player.show()
+	spaceship.toggle_player_mask(true)

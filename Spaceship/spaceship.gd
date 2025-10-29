@@ -37,6 +37,8 @@ var is_controlled: bool = false
 var is_free_looking: bool = false
 var is_in_gravity: bool = false
 
+var is_printing: bool = false
+
 
 func _ready() -> void:
 	last_position = global_position
@@ -102,13 +104,21 @@ func _physics_process(delta: float) -> void:
 		target_rot.x -= target_rot.x * delta * 2.0
 		target_rot.y -= target_rot.y * delta * 2.0
 	calculated_velocity = global_position - last_position
-	if calculated_velocity > Vector3.ONE:
+	if is_printing:
+		print("\n")
 		print(global_position)
 		print(last_position)
 		print(calculated_velocity)
-		breakpoint
+		print(linear_velocity)
 	last_position = global_position
 
 
 func toggle_camera(on: bool) -> void:
 	camera.current = on
+
+
+func toggle_player_mask(on: bool) -> void:
+	if on:
+		get_tree().create_timer(0.1).timeout.connect(func(): call_deferred("set_collision_mask_value", 2, on))
+	else:
+		call_deferred("set_collision_mask_value", 2, on)
