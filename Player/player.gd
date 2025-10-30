@@ -182,6 +182,8 @@ func _physics_process(delta: float) -> void:
 			velocity.y += jump_velocity / 10.0
 		else:
 			has_started_jumping = false
+		if !is_in_gravity:
+			velocity = velocity.move_toward(Vector3.ZERO, delta * acceleration * gravity_control)
 	else:
 		has_started_jumping = false
 	
@@ -223,6 +225,10 @@ func _physics_process(delta: float) -> void:
 			is_running = true
 			anim_locomotion_playback.travel(&"running")
 		additional_speed = move_toward(additional_speed, sprint_speed, delta * acceleration / 2)
+	elif Input.is_action_pressed(&"move_sprint") and !is_in_gravity:
+		velocity += (up_marker.global_position - global_position) * delta * max_speed * 0.1
+	elif Input.is_action_pressed(&"move_down") and !is_in_gravity:
+		velocity += (global_position - up_marker.global_position) * delta * max_speed * 0.1
 	elif is_on_floor():
 		additional_speed = move_toward(additional_speed, 0.0, delta * acceleration / 2)
 	
@@ -235,7 +241,7 @@ func _physics_process(delta: float) -> void:
 	if direction:
 		if !is_in_gravity:
 			#velocity = velocity.move_toward(direction * max_speed, delta * acceleration * gravity_control)
-			velocity += direction * delta * max_speed * 0.5
+			velocity += direction * delta * max_speed * 0.2
 		else:
 			var new_velocity: Vector2 = Vector2(velocity.x, velocity.z)
 			var new_direction: Vector2 = Vector2(direction.x, direction.z)

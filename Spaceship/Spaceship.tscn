@@ -1009,3 +1009,32 @@ material = SubResource("StandardMaterial3D_llyuj")
 
 [node name="Marker3D" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, -3)
+
+[node name="Timers" type="Node" parent="."]
+
+[node name="Sprint Timer" type="Timer" parent="Timers"]
+one_shot = true
+
+[node name="Forward Timer" type="Timer" parent="Timers"]
+one_shot = true
+
+[node name="Back Timer" type="Timer" parent="Timers"]
+one_shot = true
+
+[node name="Left Timer" type="Timer" parent="Timers"]
+one_shot = true
+
+[node name="Right Timer" type="Timer" parent="Timers"]
+one_shot = true
+
+[node name="Down Timer" type="Timer" parent="Timers"]
+one_shot = true
+
+[node name="Clockwise Timer" type="Timer" parent="Timers"]
+one_shot = true
+
+[node name="Counter Clockwise Timer" type="Timer" parent="Timers"]
+one_shot = true
+
+[node name="Jump Timer" type="Timer" parent="Timers"]
+one_shot = true
