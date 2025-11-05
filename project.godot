@@ -15,6 +15,10 @@ run/main_scene="uid://03faniklx1al"
 config/features=PackedStringArray("4.5", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[display]
+
+window/vsync/vsync_mode=0
+
 [input]
 
 move_forward={
@@ -85,6 +89,7 @@ free_look={
 3d_physics/layer_3="Spaceship"
 3d_physics/layer_4="Gravity Field"
 3d_physics/layer_5="Asteroids"
+3d_physics/layer_6="Spaceship Utility"
 
 [physics]
 

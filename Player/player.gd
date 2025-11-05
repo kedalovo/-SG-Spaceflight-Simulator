@@ -52,6 +52,8 @@ signal exit_ship
 @onready var collision: CollisionShape3D = $Collision
 
 @onready var interaction_ray: RayCast3D = $"Camera Gymbal/Interaction Ray"
+@onready var step_top_ray: RayCast3D = $"Step Top Ray"
+@onready var step_bottom_shape: ShapeCast3D = $"Step Bottom Shape"
 
 var direction: Vector3 = Vector3.ZERO
 
@@ -86,6 +88,7 @@ var has_landed: bool = false
 var can_shoot: bool = true
 var has_stepped: bool = false
 var is_free_looking: bool = false
+var has_started_stairs: bool = false
 
 var is_in_ship: bool = false
 
@@ -239,14 +242,25 @@ func _physics_process(delta: float) -> void:
 	direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	
 	if direction:
+		# Motion in zero gravity
 		if !is_in_gravity:
 			#velocity = velocity.move_toward(direction * max_speed, delta * acceleration * gravity_control)
 			velocity += direction * delta * max_speed * 0.2
+		# Motion in normal gravity
 		else:
 			var new_velocity: Vector2 = Vector2(velocity.x, velocity.z)
 			var new_direction: Vector2 = Vector2(direction.x, direction.z)
 			if is_on_floor():
 				new_velocity = new_velocity.move_toward(new_direction * (max_speed + additional_speed), delta * acceleration)
+				#if step_bottom_shape.is_colliding():
+					#print("COLLISION")
+				if step_bottom_shape.is_colliding() and !step_top_ray.is_colliding() and !has_started_stairs:
+					has_started_stairs = true
+					position.y += step_top_ray.position.y
+				if !step_bottom_shape.is_colliding():
+					has_started_stairs = false
+				#elif step_bottom_shape.is_colliding():
+					#prints(step_bottom_shape.is_colliding(), step_top_ray.is_colliding())
 			else:
 				new_velocity = new_velocity.move_toward(new_direction * (max_speed + additional_speed), delta * acceleration * air_control)
 			velocity.x = new_velocity.x

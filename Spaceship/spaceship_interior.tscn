@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://45ojdm5bboee"]
+[gd_scene load_steps=12 format=3 uid="uid://45ojdm5bboee"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ge8n8"]
 size = Vector3(4, 0.1, 7)
@@ -22,6 +22,12 @@ size = Vector3(0.1, 2.5, 7)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_yrdhd"]
 size = Vector3(3, 0.1, 3)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ge8n8"]
+albedo_color = Color(0, 0.83984375, 0.52490234, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mbbhd"]
+size = Vector3(0.5, 0.5, 0.5)
 
 [node name="Spaceship Interior" type="RigidBody3D"]
 disable_mode = 2
@@ -97,3 +103,15 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, -0.5, 2)
 [node name="Trappe" type="CSGBox3D" parent="Model"]
 transform = Transform3D(1, 0, 0, 0, 0.9530852, -0.3027026, 0, 0.3027026, 0.9530852, 0, -0.4617422, 4.9002094)
 size = Vector3(3, 0.1, 3)
+
+[node name="Cockpit Chair" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2948871, -2.6284037)
+collision_layer = 32
+collision_mask = 2
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Cockpit Chair"]
+size = Vector3(0.5, 0.5, 0.5)
+material = SubResource("StandardMaterial3D_ge8n8")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Cockpit Chair"]
+shape = SubResource("BoxShape3D_mbbhd")
