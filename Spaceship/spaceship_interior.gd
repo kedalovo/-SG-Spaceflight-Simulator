@@ -1,7 +1,7 @@
 extends RigidBody3D
 
 
-class_name Spaceship
+class_name SpaceshipInterior
 
 
 @onready var front_marker: Marker3D = $"Markers/Front Marker"
@@ -10,10 +10,8 @@ class_name Spaceship
 @onready var right_marker: Marker3D = $"Markers/Right Marker"
 @onready var top_marker: Marker3D = $"Markers/Top Marker"
 @onready var bottom_marker: Marker3D = $"Markers/Bottom Marker"
-@onready var sphere: CSGSphere3D = $Sphere
-@onready var camera: Camera3D = $"Model/Camera Gymbal/Camera Offset/Camera"
-@onready var camera_gymbal: Node3D = $"Model/Camera Gymbal"
-@onready var camera_offset: SpringArm3D = $"Model/Camera Gymbal/Camera Offset"
+@onready var camera: Camera3D = $"Camera Gymbal/Camera"
+@onready var camera_gymbal: Node3D = $"Camera Gymbal"
 
 @onready var sprint_timer: Timer = $"Timers/Sprint Timer"
 @onready var forward_timer: Timer = $"Timers/Forward Timer"
@@ -25,7 +23,16 @@ class_name Spaceship
 @onready var counter_clockwise_timer: Timer = $"Timers/Counter Clockwise Timer"
 @onready var jump_timer: Timer = $"Timers/Jump Timer"
 
+@onready var cockpit_chair: StaticBody3D = $"Cockpit Chair"
+
 @onready var exit_point: Marker3D = $"Exit Point"
+
+@onready var top_camera: Camera3D = $"Cameras Viewport/Cameras/Top Camera"
+@onready var bottom_camera: Camera3D = $"Cameras Viewport/Cameras/Bottom Camera"
+@onready var right_camera: Camera3D = $"Cameras Viewport/Cameras/Right Camera"
+@onready var left_camera: Camera3D = $"Cameras Viewport/Cameras/Left Camera"
+
+@onready var camera_animator: AnimationPlayer = $"Camera Gymbal/Camera Animator"
 
 @export var max_head_angle: float = 75.0
 @export var min_head_angle: float = -75.0
@@ -40,6 +47,9 @@ const SPEED = 2.0
 const ASCEND_VELOCITY = 5.0
 
 
+@onready var cameras: Array[Camera3D] = [top_camera, bottom_camera, right_camera, left_camera]
+var current_camera: int = 0
+
 var target_rot: Vector2 = Vector2.ZERO
 
 var calculated_velocity: Vector3 = Vector3.ZERO
@@ -48,6 +58,7 @@ var last_position: Vector3 = Vector3.ZERO
 var is_controlled: bool = false
 var is_free_looking: bool = false
 var is_in_gravity: bool = true
+var is_external_camera: bool = false
 
 var has_started_sprint: bool = false
 var has_started_forward: bool = false
@@ -65,43 +76,71 @@ func _ready() -> void:
 
 
 func _input(event: InputEvent) -> void:
-	if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED and is_controlled:
-		if is_in_gravity:
-			if is_free_looking:
-				camera_gymbal.rotation.y += deg_to_rad(-event.screen_relative.x) * mouse_sensitivity
-				var final_x_rotation = camera_gymbal.rotation.x + deg_to_rad(event.screen_relative.y) * mouse_sensitivity
-				if final_x_rotation > deg_to_rad(min_head_angle) and final_x_rotation < deg_to_rad(max_head_angle):
-					camera_gymbal.rotation.x = final_x_rotation
+	if is_controlled:
+		if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
+			if is_in_gravity:
+				if is_free_looking:
+					if is_external_camera:
+						var cur_cam: Camera3D = cameras[current_camera]
+						cur_cam.rotation.y += deg_to_rad(-event.screen_relative.x) * mouse_sensitivity
+						var final_x_rotation = cur_cam.rotation.x + deg_to_rad(-event.screen_relative.y) * mouse_sensitivity
+						if final_x_rotation > deg_to_rad(min_head_angle) and final_x_rotation < deg_to_rad(max_head_angle):
+							cur_cam.rotation.x = final_x_rotation
+					else:
+						camera_gymbal.rotation.y += deg_to_rad(-event.screen_relative.x) * mouse_sensitivity
+						var final_x_rotation = camera_gymbal.rotation.x + deg_to_rad(-event.screen_relative.y) * mouse_sensitivity
+						if final_x_rotation > deg_to_rad(min_head_angle) and final_x_rotation < deg_to_rad(max_head_angle):
+							camera_gymbal.rotation.x = final_x_rotation
+				else:
+					target_rot.x += deg_to_rad(-event.screen_relative.y) * mouse_sensitivity
+					target_rot.y += deg_to_rad(-event.screen_relative.x) * mouse_sensitivity
+					target_rot = clamp(target_rot, Vector2(-90.0, -90.0), Vector2(90.0, 90.0))
 			else:
-				target_rot.x += deg_to_rad(-event.screen_relative.y) * mouse_sensitivity
-				target_rot.y += deg_to_rad(-event.screen_relative.x) * mouse_sensitivity
-				target_rot = clamp(target_rot, Vector2(-90.0, -90.0), Vector2(90.0, 90.0))
+				if is_free_looking:
+					if is_external_camera:
+						var cur_cam: Camera3D = cameras[current_camera]
+						cur_cam.rotation.y += deg_to_rad(-event.screen_relative.x) * mouse_sensitivity
+						var final_x_rotation = cur_cam.rotation.x + deg_to_rad(-event.screen_relative.y) * mouse_sensitivity
+						if final_x_rotation > deg_to_rad(min_head_angle) and final_x_rotation < deg_to_rad(max_head_angle):
+							cur_cam.rotation.x = final_x_rotation
+					else:
+						camera_gymbal.rotate_object_local(Vector3.RIGHT, -event.screen_relative.y * 0.001)
+						camera_gymbal.rotate_object_local(Vector3.UP, -event.screen_relative.x * 0.001)
+				else:
+					target_rot.x += deg_to_rad(-event.screen_relative.y) * mouse_sensitivity
+					target_rot.y += deg_to_rad(-event.screen_relative.x) * mouse_sensitivity
+					target_rot = clamp(target_rot, Vector2(-90.0, -90.0), Vector2(90.0, 90.0))
+		if Input.is_action_pressed("free_look"):
+			is_free_looking = true
 		else:
-			if is_free_looking:
-				camera_gymbal.rotate_object_local(Vector3.RIGHT, event.screen_relative.y * 0.001)
-				camera_gymbal.rotate_object_local(Vector3.UP, -event.screen_relative.x * 0.001)
+			is_free_looking = false
+		if Input.is_action_just_released("free_look") and !is_external_camera:
+			var tween: Tween = get_tree().create_tween()
+			tween.tween_property(camera_gymbal, "rotation", Vector3.ZERO, 0.6).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+		if Input.is_action_just_pressed("next_camera"):
+			cameras[current_camera].current = false
+			current_camera += 1
+			if current_camera == 4:
+				current_camera = 0
+			cameras[current_camera].current = true
+		if Input.is_action_just_pressed("previous_camera"):
+			cameras[current_camera].current = false
+			current_camera -= 1
+			if current_camera == -1:
+				current_camera = 3
+			cameras[current_camera].current = true
+		if Input.is_action_just_pressed("open_camera"):
+			if is_external_camera:
+				camera_animator.play("look_back")
+				is_external_camera = false
 			else:
-				target_rot.x += deg_to_rad(-event.screen_relative.y) * mouse_sensitivity
-				target_rot.y += deg_to_rad(-event.screen_relative.x) * mouse_sensitivity
-				target_rot = clamp(target_rot, Vector2(-90.0, -90.0), Vector2(90.0, 90.0))
-	if event is InputEventMouseButton and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED and is_controlled:
-		if event.is_pressed() and event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
-			camera_offset.spring_length = clampf(camera_offset.spring_length + zoom_force, zoom_min, zoom_max)
-		if event.is_pressed() and event.button_index == MOUSE_BUTTON_WHEEL_UP:
-			camera_offset.spring_length = clampf(camera_offset.spring_length - zoom_force, zoom_min, zoom_max)
-			if camera_offset.spring_length < 1.2:
-				camera_offset.spring_length = 1.0
-	if Input.is_action_pressed("free_look"):
-		is_free_looking = true
-	else:
-		is_free_looking = false
-	if Input.is_action_just_released("free_look"):
-		var tween: Tween = get_tree().create_tween()
-		tween.tween_property(camera_gymbal, "rotation", Vector3.ZERO, 0.6).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+				camera_animator.play("look")
+				is_external_camera = true
 
 
 func _physics_process(delta: float) -> void:
 	if is_controlled:
+		#region Input
 		if Input.is_action_pressed("move_sprint"):
 			if !has_started_sprint:
 				has_started_sprint = true
@@ -174,6 +213,7 @@ func _physics_process(delta: float) -> void:
 				apply_central_impulse(-linear_velocity.normalized() * delta * ASCEND_VELOCITY * mass * (acceleration_time - jump_timer.time_left) / acceleration_time)
 		else:
 			has_started_jump = false
+		#endregion
 		
 		apply_torque_impulse((global_position - left_marker.global_position) * target_rot.x * delta * mass)
 		apply_torque_impulse((global_position - bottom_marker.global_position) * target_rot.y * delta * mass)

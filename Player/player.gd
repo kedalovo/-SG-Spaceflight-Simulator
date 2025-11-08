@@ -5,8 +5,7 @@ class_name Player
 
 
 signal shooting(pos: Vector3, direction: Vector3)
-signal enter_ship
-signal exit_ship
+signal interaction(collider: RID)
 
 
 @export var speed: float = 5.0
@@ -133,10 +132,7 @@ func _input(event: InputEvent) -> void:
 				position_offset.spring_length = 0.0
 				model.hide()
 	if Input.is_action_just_pressed("interaction"):
-		if !is_in_ship and interaction_ray.is_colliding():
-			enter_ship.emit()
-		elif is_in_ship:
-			exit_ship.emit()
+		interaction.emit(interaction_ray.get_collider_rid())
 	if Input.is_action_pressed("free_look"):
 		is_free_looking = true
 	else:

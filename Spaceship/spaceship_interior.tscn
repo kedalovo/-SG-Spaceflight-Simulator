@@ -1,4 +1,6 @@
-[gd_scene load_steps=12 format=3 uid="uid://45ojdm5bboee"]
+[gd_scene load_steps=20 format=3 uid="uid://45ojdm5bboee"]
+
+[ext_resource type="Script" uid="uid://df1c0gbhvalq7" path="res://Spaceship/spaceship_interior.gd" id="1_817ta"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ge8n8"]
 size = Vector3(4, 0.1, 7)
@@ -23,11 +25,236 @@ size = Vector3(0.1, 2.5, 7)
 [sub_resource type="BoxShape3D" id="BoxShape3D_yrdhd"]
 size = Vector3(3, 0.1, 3)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_q0fis"]
+size = Vector3(0.05, 0.7, 0.5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_kku8t"]
+size = Vector3(0.01, 0.5, 0.5)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_817ta"]
+viewport_path = NodePath("Cameras Viewport")
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ge8n8"]
 albedo_color = Color(0, 0.83984375, 0.52490234, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_mbbhd"]
 size = Vector3(0.5, 0.5, 0.5)
+
+[sub_resource type="Animation" id="Animation_817ta"]
+resource_name = "look"
+step = 0.1
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0, 0, 0, 0.3, 0, 0.575, -1, 0, 0, 0),
+"times": PackedFloat32Array(0, 1)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(1.1954198, 0, 0, 0.3, 0, 0.86, -1, 0, 0, 0),
+"times": PackedFloat32Array(0, 1)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:position:z")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(-1.9128757, 0, 0, 0.3, 0, -2.398, -1, 0, 0, 0),
+"times": PackedFloat32Array(0, 1)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:rotation:x")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0, 0, 0, 0.3, 0, -0.4886922, -1, 0, 0, 0),
+"times": PackedFloat32Array(0, 1)
+}
+tracks/4/type = "bezier"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".:rotation:y")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0, 0, 0, 0.3, 0, -0.7853982, -1, 0, 0, 0),
+"times": PackedFloat32Array(0, 1)
+}
+tracks/5/type = "bezier"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath(".:rotation:z")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0, 0, 0, 0.3, 0, 0, -1, 0, 0, 0),
+"times": PackedFloat32Array(0, 1)
+}
+
+[sub_resource type="Animation" id="Animation_q2msm"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1.1954198, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:position:z")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(-1.9128757, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:rotation:x")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/4/type = "bezier"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".:rotation:y")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/5/type = "bezier"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath(".:rotation:z")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_53y8a"]
+resource_name = "look_back"
+step = 0.1
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0.575, 0, 0, 0.3, 0, 0, -1, 0, 0, 0),
+"times": PackedFloat32Array(0, 1)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0.86, 0, 0, 0.3, 0, 1.1954198, -1, 0, 0, 0),
+"times": PackedFloat32Array(0, 1)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:position:z")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(-2.398, 0, 0, 0.3, 0, -1.9128757, -1, 0, 0, 0),
+"times": PackedFloat32Array(0, 1)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:rotation:x")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(-0.4886922, 0, 0, 0.3, 0, 0, -1, 0, 0, 0),
+"times": PackedFloat32Array(0, 1)
+}
+tracks/4/type = "bezier"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".:rotation:y")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(-0.7853982, 0, 0, 0.3, 0, 0, -1, 0, 0, 0),
+"times": PackedFloat32Array(0, 1)
+}
+tracks/5/type = "bezier"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath(".:rotation:z")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0, 0, 0, 0.3, 0, 0, -1, 0, 0, 0),
+"times": PackedFloat32Array(0, 1)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2nmip"]
+_data = {
+&"RESET": SubResource("Animation_q2msm"),
+&"look": SubResource("Animation_817ta"),
+&"look_back": SubResource("Animation_53y8a")
+}
 
 [node name="Spaceship Interior" type="RigidBody3D"]
 disable_mode = 2
@@ -35,41 +262,51 @@ collision_layer = 4
 collision_mask = 27
 mass = 100.0
 can_sleep = false
+angular_damp = 1.0
+script = ExtResource("1_817ta")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+[node name="Shape" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_ge8n8")
 
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
+[node name="Shape 2" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3904803, 0)
 shape = SubResource("BoxShape3D_817ta")
 
-[node name="CollisionShape3D3" type="CollisionShape3D" parent="."]
+[node name="Shape 3" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1.1973066, 0)
 shape = SubResource("BoxShape3D_q2msm")
 
-[node name="CollisionShape3D4" type="CollisionShape3D" parent="."]
+[node name="Shape 4" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 1.1973066, 0)
 shape = SubResource("BoxShape3D_53y8a")
 
-[node name="CollisionShape3D5" type="CollisionShape3D" parent="."]
+[node name="Shape 5" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, -0.5, -2)
 shape = SubResource("BoxShape3D_2nmip")
 
-[node name="CollisionShape3D6" type="CollisionShape3D" parent="."]
+[node name="Shape 6" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, -0.5, -2)
 shape = SubResource("BoxShape3D_icpuk")
 
-[node name="CollisionShape3D7" type="CollisionShape3D" parent="."]
+[node name="Shape 7" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, -0.5, 2)
 shape = SubResource("BoxShape3D_u47jy")
 
-[node name="CollisionShape3D8" type="CollisionShape3D" parent="."]
+[node name="Shape 8" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, -0.5, 2)
 shape = SubResource("BoxShape3D_are3m")
 
-[node name="CollisionShape3D9" type="CollisionShape3D" parent="."]
+[node name="Shape 9" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.9530852, -0.3027026, 0, 0.3027026, 0.9530852, 0, -0.4617422, 4.9002094)
 shape = SubResource("BoxShape3D_yrdhd")
+
+[node name="Shape 10" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.70710677, 0, 0.70710677, 0, 1, 0, -0.70710677, 0, 0.70710677, 0.82251406, 0.39969867, -2.6873431)
+shape = SubResource("BoxShape3D_q0fis")
+
+[node name="Shape 11" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.6123724, 0.35355338, 0.70710677, -0.5, 0.8660253, 0, -0.6123724, -0.35355338, 0.70710677, 0.7743284, 0.6928804, -2.6431036)
+shape = SubResource("BoxShape3D_kku8t")
 
 [node name="Model" type="Node3D" parent="."]
 
@@ -104,8 +341,20 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, -0.5, 2)
 transform = Transform3D(1, 0, 0, 0, 0.9530852, -0.3027026, 0, 0.3027026, 0.9530852, 0, -0.4617422, 4.9002094)
 size = Vector3(3, 0.1, 3)
 
+[node name="Screen Stand" type="CSGBox3D" parent="Model"]
+transform = Transform3D(0.70710677, 0, 0.70710677, 0, 1, 0, -0.70710677, 0, 0.70710677, 0.82251406, 0.39969867, -2.6873431)
+size = Vector3(0.05, 0.7, 0.5)
+
+[node name="Screen" type="CSGBox3D" parent="Model"]
+transform = Transform3D(-0.61237234, 0.35355332, -0.70710677, 0.49999997, 0.8660253, 0, 0.6123724, -0.35355335, -0.70710665, 0.7743284, 0.6928804, -2.6431036)
+size = Vector3(0.01, 0.5, 0.5)
+
+[node name="Sprite3D" type="Sprite3D" parent="Model/Screen"]
+transform = Transform3D(-4.8082525e-09, -1.2293457e-08, 0.11, -2.0489097e-09, 0.11, 1.2293457e-08, -0.11, -2.048909e-09, -4.808253e-09, 0.0055377483, -0.0031971931, 0.0009264946)
+texture = SubResource("ViewportTexture_817ta")
+
 [node name="Cockpit Chair" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2948871, -2.6284037)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2948871, -1.9354041)
 collision_layer = 32
 collision_mask = 2
 
@@ -115,3 +364,87 @@ material = SubResource("StandardMaterial3D_ge8n8")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Cockpit Chair"]
 shape = SubResource("BoxShape3D_mbbhd")
+
+[node name="Markers" type="Node3D" parent="."]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
+
+[node name="Front Marker" type="Marker3D" parent="Markers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3)
+
+[node name="Back Marker" type="Marker3D" parent="Markers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3)
+
+[node name="Left Marker" type="Marker3D" parent="Markers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 0)
+
+[node name="Right Marker" type="Marker3D" parent="Markers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, 0)
+
+[node name="Top Marker" type="Marker3D" parent="Markers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+
+[node name="Bottom Marker" type="Marker3D" parent="Markers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3, 0)
+
+[node name="Timers" type="Node" parent="."]
+
+[node name="Sprint Timer" type="Timer" parent="Timers"]
+one_shot = true
+
+[node name="Forward Timer" type="Timer" parent="Timers"]
+one_shot = true
+
+[node name="Back Timer" type="Timer" parent="Timers"]
+one_shot = true
+
+[node name="Left Timer" type="Timer" parent="Timers"]
+one_shot = true
+
+[node name="Right Timer" type="Timer" parent="Timers"]
+one_shot = true
+
+[node name="Down Timer" type="Timer" parent="Timers"]
+one_shot = true
+
+[node name="Clockwise Timer" type="Timer" parent="Timers"]
+one_shot = true
+
+[node name="Counter Clockwise Timer" type="Timer" parent="Timers"]
+one_shot = true
+
+[node name="Jump Timer" type="Timer" parent="Timers"]
+one_shot = true
+
+[node name="Camera Gymbal" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1954198, -1.9128757)
+
+[node name="Camera" type="Camera3D" parent="Camera Gymbal"]
+
+[node name="Camera Animator" type="AnimationPlayer" parent="Camera Gymbal"]
+libraries = {
+&"": SubResource("AnimationLibrary_2nmip")
+}
+
+[node name="Exit Point" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15415326, -0.46640754)
+
+[node name="Cameras Viewport" type="SubViewport" parent="."]
+size = Vector2i(400, 400)
+
+[node name="Cameras" type="Node3D" parent="Cameras Viewport"]
+
+[node name="Top Camera" type="Camera3D" parent="Cameras Viewport/Cameras"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.6378896, 0)
+current = true
+
+[node name="Bottom Camera" type="Camera3D" parent="Cameras Viewport/Cameras"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.42639637, 0)
+
+[node name="Right Camera" type="Camera3D" parent="Cameras Viewport/Cameras"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.2800493, 0.8322396, 0)
+
+[node name="Left Camera" type="Camera3D" parent="Cameras Viewport/Cameras"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.4606037, 0.8322396, 0)
+
+[node name="RemoteTransform3D" type="RemoteTransform3D" parent="."]
+remote_path = NodePath("../Cameras Viewport/Cameras")
