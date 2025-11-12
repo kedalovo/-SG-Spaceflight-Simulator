@@ -40,6 +40,8 @@ const SPEED = 2.0
 const ASCEND_VELOCITY = 5.0
 
 
+var gravity_areas: Array = []
+
 var target_rot: Vector2 = Vector2.ZERO
 
 var calculated_velocity: Vector3 = Vector3.ZERO

@@ -54,6 +54,8 @@ signal interaction(collider: RID)
 @onready var step_top_ray: RayCast3D = $"Step Top Ray"
 @onready var step_bottom_shape: ShapeCast3D = $"Step Bottom Shape"
 
+var gravity_areas: Array = []
+
 var direction: Vector3 = Vector3.ZERO
 
 var anim_movement: Vector2 = Vector2.ZERO
@@ -70,6 +72,8 @@ var is_in_gravity: bool = true:
 	get:
 		return _is_in_gravity
 	set(v):
+		if _is_in_gravity == v:
+			return
 		_is_in_gravity = v
 		is_in_gravity = v
 		if v:
@@ -284,6 +288,15 @@ func _physics_process(delta: float) -> void:
 		target_rot.x -= target_rot.x * delta * 2.0
 		target_rot.y -= target_rot.y * delta * 2.0
 		pass
+	
+	#endregion
+
+	#region Handling UP vector
+	
+	if !gravity_areas.is_empty():
+		up_direction = gravity_areas.back().get_up_direction()
+	else:
+		up_direction = Vector3.UP
 	
 	#endregion
 

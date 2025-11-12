@@ -46,9 +46,8 @@ func _input(event: InputEvent) -> void:
 
 
 func _process(_delta: float) -> void:
-	label.text = str(spaceship.calculated_velocity)
+	label.text = str(player.is_in_gravity)
 	pass
-	#label.text += "\n" + str(spaceship.input_ dir)
 
 
 func quit_game() -> void:

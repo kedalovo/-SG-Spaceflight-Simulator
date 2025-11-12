@@ -47,5 +47,8 @@ initial_velocity_min = 0.1
 initial_velocity_max = 0.2
 color_ramp = SubResource("Gradient_pmoko")
 
+[node name="Up Position" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
 [connection signal="body_entered" from="Area" to="." method="_on_area_body_entered"]
 [connection signal="body_exited" from="Area" to="." method="_on_area_body_exited"]

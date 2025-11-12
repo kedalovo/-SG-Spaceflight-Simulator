@@ -5,6 +5,7 @@ extends Node3D
 @onready var collision: CollisionShape3D = $Area/Collision
 @onready var particles: CPUParticles3D = $Particles
 @onready var area: Area3D = $Area
+@onready var up_position: Marker3D = $"Up Position"
 
 var _field_size: Vector3 = Vector3(1.0, 1.0, 1.0)
 var _gravity_direction: Vector3 = Vector3(0.0, -1.0, 0.0)
@@ -73,11 +74,19 @@ func _ready() -> void:
 		area.gravity_direction = gravity_direction
 
 
+func get_up_direction() -> Vector3:
+	return (up_position.global_position - global_position).normalized()
+
+
 func _on_area_body_entered(body: Node3D) -> void:
 	if body is Player or body is Spaceship:
 		body.is_in_gravity = true
+		if self not in body.gravity_areas:
+			body.gravity_areas.append(self)
 
 
 func _on_area_body_exited(body: Node3D) -> void:
 	if body is Player or body is Spaceship:
-		body.is_in_gravity = false
+		body.gravity_areas.erase(self)
+		if body.gravity_areas.is_empty():
+			body.is_in_gravity = false

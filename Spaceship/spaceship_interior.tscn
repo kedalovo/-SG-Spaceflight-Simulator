@@ -1,6 +1,7 @@
-[gd_scene load_steps=20 format=3 uid="uid://45ojdm5bboee"]
+[gd_scene load_steps=25 format=3 uid="uid://45ojdm5bboee"]
 
 [ext_resource type="Script" uid="uid://df1c0gbhvalq7" path="res://Spaceship/spaceship_interior.gd" id="1_817ta"]
+[ext_resource type="Script" uid="uid://bb1ghhy7ktugd" path="res://Gravity Field/gravity_field.gd" id="2_q2msm"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ge8n8"]
 size = Vector3(4, 0.1, 7)
@@ -39,6 +40,75 @@ albedo_color = Color(0, 0.83984375, 0.52490234, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_mbbhd"]
 size = Vector3(0.5, 0.5, 0.5)
+
+[sub_resource type="Animation" id="Animation_q2msm"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1.1954198, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:position:z")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(-1.9128757, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:rotation:x")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/4/type = "bezier"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".:rotation:y")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/5/type = "bezier"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath(".:rotation:z")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
 
 [sub_resource type="Animation" id="Animation_817ta"]
 resource_name = "look"
@@ -108,75 +178,6 @@ tracks/5/keys = {
 "handle_modes": PackedInt32Array(0, 0),
 "points": PackedFloat32Array(0, 0, 0, 0.3, 0, 0, -1, 0, 0, 0),
 "times": PackedFloat32Array(0, 1)
-}
-
-[sub_resource type="Animation" id="Animation_q2msm"]
-length = 0.001
-tracks/0/type = "bezier"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:position:x")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/1/type = "bezier"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:position:y")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(1.1954198, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/2/type = "bezier"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath(".:position:z")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(-1.9128757, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/3/type = "bezier"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath(".:rotation:x")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/4/type = "bezier"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath(".:rotation:y")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/5/type = "bezier"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath(".:rotation:z")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
 }
 
 [sub_resource type="Animation" id="Animation_53y8a"]
@@ -256,10 +257,32 @@ _data = {
 &"look_back": SubResource("Animation_53y8a")
 }
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_ccejq"]
+size = Vector3(3.9, 2.2, 6.9)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_klpd2"]
+transparency = 1
+vertex_color_use_as_albedo = true
+albedo_color = Color(1, 0.6313726, 0, 1)
+emission = Color(1, 0.6313726, 0, 1)
+emission_energy_multiplier = 100.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_6bdug"]
+material = SubResource("StandardMaterial3D_klpd2")
+radius = 0.08
+height = 0.16
+radial_segments = 8
+rings = 4
+
+[sub_resource type="Gradient" id="Gradient_pmoko"]
+offsets = PackedFloat32Array(0, 0.3, 0.7, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+metadata/_snap_enabled = true
+
 [node name="Spaceship Interior" type="RigidBody3D"]
 disable_mode = 2
 collision_layer = 4
-collision_mask = 27
+collision_mask = 25
 mass = 100.0
 can_sleep = false
 angular_damp = 1.0
@@ -448,3 +471,36 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.4606037, 0.8322396, 0)
 
 [node name="RemoteTransform3D" type="RemoteTransform3D" parent="."]
 remote_path = NodePath("../Cameras Viewport/Cameras")
+
+[node name="Gravity Field" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
+script = ExtResource("2_q2msm")
+field_size = Vector3(3.9, 2.2, 6.9)
+
+[node name="Area" type="Area3D" parent="Gravity Field"]
+collision_layer = 8
+collision_mask = 18
+gravity_space_override = 3
+
+[node name="Collision" type="CollisionShape3D" parent="Gravity Field/Area"]
+shape = SubResource("BoxShape3D_ccejq")
+
+[node name="Particles" type="CPUParticles3D" parent="Gravity Field"]
+emitting = false
+amount = 135
+lifetime = 10.0
+mesh = SubResource("SphereMesh_6bdug")
+emission_shape = 3
+emission_box_extents = Vector3(1.95, 1.1, 3.45)
+direction = Vector3(0, 0, 0)
+spread = 180.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 0.1
+initial_velocity_max = 0.2
+color_ramp = SubResource("Gradient_pmoko")
+
+[node name="Up Position" type="Marker3D" parent="Gravity Field"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[connection signal="body_entered" from="Gravity Field/Area" to="Gravity Field" method="_on_area_body_entered"]
+[connection signal="body_exited" from="Gravity Field/Area" to="Gravity Field" method="_on_area_body_exited"]

@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://bc4137boy0iro"]
+
+[ext_resource type="Texture2D" uid="uid://b8fkwwsg3pv20" path="res://Resources/Green Nebula.png" id="1_jpreg"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_2n0io"]
+panorama = ExtResource("1_jpreg")
+energy_multiplier = 1.5
+
+[sub_resource type="Sky" id="Sky_7raqb"]
+sky_material = SubResource("PanoramaSkyMaterial_2n0io")
+
+[sub_resource type="Environment" id="Environment_3c0xt"]
+background_mode = 2
+sky = SubResource("Sky_7raqb")
+tonemap_mode = 2
+glow_enabled = true
+
+[node name="Green Station" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.86515146, -0.42060226, 0.27314228, 0, 0.544639, 0.8386706, -0.5015107, 0.7255771, -0.47119522, 0, 0, 0)
+shadow_enabled = true
+directional_shadow_max_distance = 200.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_3c0xt")

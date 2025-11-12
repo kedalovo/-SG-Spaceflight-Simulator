@@ -33,6 +33,7 @@ class_name SpaceshipInterior
 @onready var left_camera: Camera3D = $"Cameras Viewport/Cameras/Left Camera"
 
 @onready var camera_animator: AnimationPlayer = $"Camera Gymbal/Camera Animator"
+@onready var cameras: Array[Camera3D] = [top_camera, bottom_camera, right_camera, left_camera]
 
 @export var max_head_angle: float = 75.0
 @export var min_head_angle: float = -75.0
@@ -47,13 +48,14 @@ const SPEED = 2.0
 const ASCEND_VELOCITY = 5.0
 
 
-@onready var cameras: Array[Camera3D] = [top_camera, bottom_camera, right_camera, left_camera]
-var current_camera: int = 0
+var gravity_areas: Array = []
 
 var target_rot: Vector2 = Vector2.ZERO
 
 var calculated_velocity: Vector3 = Vector3.ZERO
 var last_position: Vector3 = Vector3.ZERO
+
+var current_camera: int = 0
 
 var is_controlled: bool = false
 var is_free_looking: bool = false
