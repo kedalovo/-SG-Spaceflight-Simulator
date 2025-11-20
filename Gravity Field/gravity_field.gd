@@ -83,6 +83,8 @@ func _on_area_body_entered(body: Node3D) -> void:
 		body.is_in_gravity = true
 		if self not in body.gravity_areas:
 			body.gravity_areas.append(self)
+			if body is Player:
+				body.change_floor(get_up_direction())
 
 
 func _on_area_body_exited(body: Node3D) -> void:

@@ -43,10 +43,17 @@ func _ready() -> void:
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("esc"):
 		quit_game()
+	if Input.is_action_just_pressed("special"):
+		if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		else:
+			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 
 func _process(_delta: float) -> void:
-	label.text = str(player.is_in_gravity)
+	label.text = str(player.is_in_gravity) + "\n"
+	label.text += str(player.up_direction) + "\n"
+	label.text += str(player.basis) + "\n"
 	pass
 
 

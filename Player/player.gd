@@ -147,51 +147,6 @@ func _input(event: InputEvent) -> void:
 
 
 func _physics_process(delta: float) -> void:
-	#region Floor/landing detection and gravity.
-	
-	if is_on_floor():
-		if anim_playback.get_current_node() == &"falling":
-			anim_playback.travel(&"locomotion")
-		if !has_landed:
-			has_landed = true
-			if has_jumped:
-				has_jumped = false
-				anim_jumping_playback.travel(&"jumping_down")
-		else:
-			if is_running:
-				anim_locomotion_playback.travel(&"running")
-	else:
-		if !is_coyote_time and has_landed:
-			is_coyote_time = true
-			has_landed = false
-			coyote_timer.start()
-		velocity += get_gravity() * delta
-		if !is_in_gravity:
-			has_jumped = false
-			has_landed = false
-			anim_playback.travel(&"floating")
-		else:
-			if anim_playback.get_current_node() in [&"locomotion", &"floating"]:
-				anim_playback.travel(&"falling")
-	
-	#endregion
-
-	#region Handle jump.
-	
-	if Input.is_action_just_pressed(&"move_jump") and (is_on_floor() or is_coyote_time) and is_in_gravity:
-		anim_playback.travel(&"jumping")
-	if Input.is_action_pressed(&"move_jump"):
-		if has_started_jumping and velocity.y < jump_velocity:
-			velocity.y += jump_velocity / 10.0
-		else:
-			has_started_jumping = false
-		if !is_in_gravity:
-			velocity = velocity.move_toward(Vector3.ZERO, delta * acceleration * gravity_control)
-	else:
-		has_started_jumping = false
-	
-	#endregion
-	
 	#region Rotation (Z) in zero gravity
 	
 	if Input.is_action_pressed(&"rotate_clockwise") and !is_in_gravity:
@@ -242,44 +197,76 @@ func _physics_process(delta: float) -> void:
 	direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	
 	if direction:
-		# Motion in zero gravity
-		if !is_in_gravity:
-			#velocity = velocity.move_toward(direction * max_speed, delta * acceleration * gravity_control)
-			velocity += direction * delta * max_speed * 0.2
 		# Motion in normal gravity
-		else:
-			var new_velocity: Vector2 = Vector2(velocity.x, velocity.z)
-			var new_direction: Vector2 = Vector2(direction.x, direction.z)
+		if is_in_gravity:
 			if is_on_floor():
-				new_velocity = new_velocity.move_toward(new_direction * (max_speed + additional_speed), delta * acceleration)
-				#if step_bottom_shape.is_colliding():
-					#print("COLLISION")
+				velocity = velocity.move_toward(direction * (max_speed + additional_speed), delta * acceleration)
 				if step_bottom_shape.is_colliding() and !step_top_ray.is_colliding() and !has_started_stairs:
 					has_started_stairs = true
 					position.y += step_top_ray.position.y
 				if !step_bottom_shape.is_colliding():
 					has_started_stairs = false
-				#elif step_bottom_shape.is_colliding():
-					#prints(step_bottom_shape.is_colliding(), step_top_ray.is_colliding())
 			else:
-				new_velocity = new_velocity.move_toward(new_direction * (max_speed + additional_speed), delta * acceleration * air_control)
-			velocity.x = new_velocity.x
-			velocity.z = new_velocity.y
-	else:
-		if !is_in_gravity:
-			#velocity = velocity.move_toward(Vector3.ZERO, delta * acceleration * gravity_control)
-			pass
+				velocity = velocity.move_toward(direction * (max_speed + additional_speed), delta * acceleration * air_control)
+		# Motion in zero gravity
 		else:
-			var new_velocity: Vector2 = Vector2(velocity.x, velocity.z)
+			velocity += direction * delta * max_speed * 0.2
+	else:
+		if is_in_gravity:
 			if is_on_floor():
-				new_velocity = new_velocity.move_toward(Vector2.ZERO, delta * acceleration * floor_friction)
+				velocity = velocity.move_toward(Vector3.ZERO, delta * acceleration * floor_friction)
 			else:
-				new_velocity = new_velocity.move_toward(Vector2.ZERO, delta * acceleration * air_friction)
-			velocity.x = new_velocity.x
-			velocity.z = new_velocity.y
+				velocity = velocity.move_toward(Vector3.ZERO, delta * acceleration * air_friction)
+		else:
+			pass
 	
 	#endregion
 
+	#region Floor/landing detection and gravity.
+	
+	if is_on_floor():
+		if anim_playback.get_current_node() == &"falling":
+			anim_playback.travel(&"locomotion")
+		if !has_landed:
+			has_landed = true
+			if has_jumped:
+				has_jumped = false
+				anim_jumping_playback.travel(&"jumping_down")
+		else:
+			if is_running:
+				anim_locomotion_playback.travel(&"running")
+	else:
+		if !is_coyote_time and has_landed:
+			is_coyote_time = true
+			has_landed = false
+			coyote_timer.start()
+		velocity += get_gravity() * delta
+		if !is_in_gravity:
+			has_jumped = false
+			has_landed = false
+			anim_playback.travel(&"floating")
+		else:
+			if anim_playback.get_current_node() in [&"locomotion", &"floating"]:
+				anim_playback.travel(&"falling")
+	
+	#endregion
+
+	#region Handle jump.
+	
+	if Input.is_action_just_pressed(&"move_jump") and (is_on_floor() or is_coyote_time) and is_in_gravity:
+		anim_playback.travel(&"jumping")
+	if Input.is_action_pressed(&"move_jump"):
+		if has_started_jumping and velocity.y < jump_velocity:
+			velocity.y += jump_velocity / 10.0
+		else:
+			has_started_jumping = false
+		if !is_in_gravity:
+			velocity = velocity.move_toward(Vector3.ZERO, delta * acceleration * gravity_control)
+	else:
+		has_started_jumping = false
+	
+	#endregion
+	
 	#region Handling rotation interpolation while in zero gravity
 	
 	if !is_in_gravity:
@@ -307,6 +294,12 @@ func _physics_process(delta: float) -> void:
 		velocity = velocity.bounce(get_last_slide_collision().get_normal()) * bounce_factor
 	
 	#endregion
+
+
+func change_floor(new_floor: Vector3) -> void:
+	var b_rotation := Quaternion(transform.basis.y, new_floor)
+	get_tree().create_tween().tween_property(self, "rotation", Basis(b_rotation * basis.get_rotation_quaternion()).get_euler(), 0.5)
+	up_direction = new_floor
 
 
 func disable_collision(on: bool) -> void:
