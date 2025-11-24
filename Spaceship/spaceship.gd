@@ -104,6 +104,7 @@ func _input(event: InputEvent) -> void:
 
 func _physics_process(delta: float) -> void:
 	if is_controlled:
+		#region Inputs
 		if Input.is_action_pressed("move_sprint"):
 			if !has_started_sprint:
 				has_started_sprint = true
@@ -177,10 +178,13 @@ func _physics_process(delta: float) -> void:
 		else:
 			has_started_jump = false
 		
+		#endregion
+		
 		apply_torque_impulse((global_position - left_marker.global_position) * target_rot.x * delta * mass)
 		apply_torque_impulse((global_position - bottom_marker.global_position) * target_rot.y * delta * mass)
 		target_rot.x -= target_rot.x * delta * 2.0
 		target_rot.y -= target_rot.y * delta * 2.0
+		
 	calculated_velocity = global_position - last_position
 	last_position = global_position
 

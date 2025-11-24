@@ -27,6 +27,8 @@ class_name SpaceshipInterior
 
 @onready var exit_point: Marker3D = $"Exit Point"
 
+@onready var gravity_field: Node3D = $"Gravity Field"
+
 @onready var top_camera: Camera3D = $"Cameras Viewport/Cameras/Top Camera"
 @onready var bottom_camera: Camera3D = $"Cameras Viewport/Cameras/Bottom Camera"
 @onready var right_camera: Camera3D = $"Cameras Viewport/Cameras/Right Camera"
@@ -221,6 +223,8 @@ func _physics_process(delta: float) -> void:
 		apply_torque_impulse((global_position - bottom_marker.global_position) * target_rot.y * delta * mass)
 		target_rot.x -= target_rot.x * delta * 2.0
 		target_rot.y -= target_rot.y * delta * 2.0
+		
+		gravity_field.gravity_direction = (global_position - top_marker.global_position).normalized()
 	calculated_velocity = global_position - last_position
 	last_position = global_position
 

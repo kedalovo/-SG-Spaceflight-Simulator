@@ -258,7 +258,6 @@ _data = {
 }
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ccejq"]
-size = Vector3(3.9, 2.2, 6.9)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_klpd2"]
 transparency = 1
@@ -476,6 +475,7 @@ remote_path = NodePath("../Cameras Viewport/Cameras")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
 script = ExtResource("2_q2msm")
 field_size = Vector3(3.9, 2.2, 6.9)
+is_constant = true
 
 [node name="Area" type="Area3D" parent="Gravity Field"]
 collision_layer = 8

@@ -44,12 +44,19 @@ var _gravity_force: float = 9.8
 		if !Engine.is_editor_hint():
 			$Area.gravity = v
 
+@export var is_constant: bool = false
+
+var player_object: Node3D
+
+var is_player_inside: bool = false
 
 const MAX_SIZE: Vector3 = Vector3(100, 100, 100)
 const MIN_SIZE: Vector3 = Vector3(1, 1, 1)
 
 
 func _ready() -> void:
+	if !is_constant:
+		set_physics_process(false)
 	collision.shape = BoxShape3D.new()
 	particles.mesh = SphereMesh.new()
 	particles.mesh.radius = 0.08
@@ -74,11 +81,19 @@ func _ready() -> void:
 		area.gravity_direction = gravity_direction
 
 
+func _physics_process(_delta: float) -> void:
+	if is_constant and is_player_inside and player_object != null:
+		player_object.change_floor(get_up_direction(), true)
+
+
 func get_up_direction() -> Vector3:
 	return (up_position.global_position - global_position).normalized()
 
 
 func _on_area_body_entered(body: Node3D) -> void:
+	if body is Player:
+		is_player_inside = true
+		player_object = body
 	if body is Player or body is Spaceship:
 		body.is_in_gravity = true
 		if self not in body.gravity_areas:
@@ -88,6 +103,8 @@ func _on_area_body_entered(body: Node3D) -> void:
 
 
 func _on_area_body_exited(body: Node3D) -> void:
+	if body is Player:
+		is_player_inside = false
 	if body is Player or body is Spaceship:
 		body.gravity_areas.erase(self)
 		if body.gravity_areas.is_empty():

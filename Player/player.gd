@@ -102,6 +102,7 @@ func _ready() -> void:
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED and !is_in_ship:
+		# Zero gravity
 		if !is_in_gravity:
 			if is_free_looking and position_offset.spring_length > 0.0:
 				camera_gymbal.rotate_object_local(Vector3.RIGHT, -event.screen_relative.y * 0.001)
@@ -111,6 +112,7 @@ func _input(event: InputEvent) -> void:
 				target_rot.x += deg_to_rad(-event.screen_relative.y) * in_gravity_mouse_sensitivity
 				target_rot.y += deg_to_rad(-event.screen_relative.x) * in_gravity_mouse_sensitivity
 				target_rot = clamp(target_rot, Vector2(-90.0, -90.0), Vector2(90.0, 90.0))
+		# Normal gravity
 		else:
 			if is_free_looking and position_offset.spring_length > 0.0:
 				camera_gymbal.rotation.y += deg_to_rad(-event.screen_relative.x) * mouse_sensitivity
@@ -296,9 +298,12 @@ func _physics_process(delta: float) -> void:
 	#endregion
 
 
-func change_floor(new_floor: Vector3) -> void:
+func change_floor(new_floor: Vector3, immediate: bool = false) -> void:
 	var b_rotation := Quaternion(transform.basis.y, new_floor)
-	get_tree().create_tween().tween_property(self, "rotation", Basis(b_rotation * basis.get_rotation_quaternion()).get_euler(), 0.5)
+	if immediate:
+		rotation = Basis(b_rotation * basis.get_rotation_quaternion()).get_euler()
+	else:
+		get_tree().create_tween().tween_property(self, "rotation", Basis(b_rotation * basis.get_rotation_quaternion()).get_euler(), 0.5)
 	up_direction = new_floor
 
 
