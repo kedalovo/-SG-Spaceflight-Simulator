@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://dt7xcken43kfl"]
+
+[ext_resource type="Texture2D" uid="uid://dyw626icejlof" path="res://Resources/Yellow Nebula.png" id="1_cpvko"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_inuy7"]
+panorama = ExtResource("1_cpvko")
+
+[sub_resource type="Sky" id="Sky_foa1o"]
+sky_material = SubResource("PanoramaSkyMaterial_inuy7")
+
+[sub_resource type="Environment" id="Environment_mc2cw"]
+background_mode = 2
+sky = SubResource("Sky_foa1o")
+tonemap_mode = 2
+glow_enabled = true
+
+[node name="Yellow Station" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.86515146, -0.42060226, 0.27314228, 0, 0.544639, 0.8386706, -0.5015107, 0.7255771, -0.47119522, 0, 0, 0)
+shadow_enabled = true
+directional_shadow_max_distance = 200.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_mc2cw")

@@ -64,6 +64,8 @@ var target_rot: Vector2 = Vector2.ZERO
 
 var checkpoint: Vector3 = Vector3(0.0, 3.0, 0.0)
 
+var position_shift: Vector3 = Vector3.ZERO
+
 var additional_speed: float = 0.0
 
 var _is_in_gravity: bool = true
@@ -291,6 +293,9 @@ func _physics_process(delta: float) -> void:
 
 	#region Bounce off collisions while in zero gravity
 	
+	#global_position += position_shift
+	#position_shift = Vector3.ZERO
+	
 	var col := move_and_slide()
 	if col and !is_in_gravity:
 		velocity = velocity.bounce(get_last_slide_collision().get_normal()) * bounce_factor
@@ -301,7 +306,7 @@ func _physics_process(delta: float) -> void:
 func change_floor(new_floor: Vector3, immediate: bool = false) -> void:
 	var b_rotation := Quaternion(transform.basis.y, new_floor)
 	if immediate:
-		rotation = Basis(b_rotation * basis.get_rotation_quaternion()).get_euler()
+		rotation = lerp(rotation, Basis(b_rotation * basis.get_rotation_quaternion()).get_euler(), 0.5)
 	else:
 		get_tree().create_tween().tween_property(self, "rotation", Basis(b_rotation * basis.get_rotation_quaternion()).get_euler(), 0.5)
 	up_direction = new_floor

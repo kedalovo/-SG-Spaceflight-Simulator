@@ -1,0 +1,189 @@
+[gd_scene load_steps=18 format=3 uid="uid://du2i141obae2c"]
+
+[ext_resource type="Script" uid="uid://cj4talslho2h1" path="res://Warp Gate/warp_gate.gd" id="1_mxdyq"]
+[ext_resource type="Shader" uid="uid://b8705tu7mc4mj" path="res://Warp Gate/warp_gate.gdshader" id="2_flwox"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_01cqu"]
+albedo_color = Color(0.40234375, 0.8599243, 1, 1)
+metallic = 1.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mxdyq"]
+shading_mode = 0
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_01cqu"]
+data = PackedVector3Array(-3.463336, -0.2524145, -5.9986753, -3.6090674, -0.2524145, -6.2510896, -6.9266734, -0.2524145, -6.05549e-07, -3.6090674, -0.2524145, -6.2510896, -3.6819332, 0, -6.377297, -7.2181363, -0.2524145, -6.3102954e-07, -6.9266734, -0.2524145, -6.05549e-07, -3.6090674, -0.2524145, -6.2510896, -7.2181363, -0.2524145, -6.3102954e-07, -6.780942, -2.5480517e-08, -5.9280876e-07, -3.463336, -0.2524145, -5.9986753, -6.9266734, -0.2524145, -6.05549e-07, -3.3904703, -2.5480517e-08, -5.8724685, -3.463336, -0.2524145, -5.9986753, -6.780942, -2.5480517e-08, -5.9280876e-07, -7.2181363, -0.2524145, -6.3102954e-07, -3.6819332, 0, -6.377297, -7.3638678, 0, -6.4376974e-07, -3.463336, -0.2524145, -5.9986753, 3.6090674, -0.2524145, -6.2510896, -3.6090674, -0.2524145, -6.2510896, -3.3904703, -2.5480517e-08, -5.8724685, 3.463336, -0.2524145, -5.9986753, -3.463336, -0.2524145, -5.9986753, -3.6090674, -0.2524145, -6.2510896, 3.6819332, 0, -6.377297, -3.6819332, 0, -6.377297, -6.9266734, -0.2524145, -6.05549e-07, -7.2181363, -0.2524145, -6.3102954e-07, -3.4633372, -0.2524145, 5.998675, -7.2181363, -0.2524145, -6.3102954e-07, -7.3638678, 0, -6.4376974e-07, -3.6090686, -0.2524145, 6.251089, -3.4633372, -0.2524145, 5.998675, -7.2181363, -0.2524145, -6.3102954e-07, -3.6090686, -0.2524145, 6.251089, -3.3904715, -2.5480517e-08, 5.872468, -6.9266734, -0.2524145, -6.05549e-07, -3.4633372, -0.2524145, 5.998675, -6.780942, -2.5480517e-08, -5.9280876e-07, -6.9266734, -0.2524145, -6.05549e-07, -3.3904715, -2.5480517e-08, 5.872468, -3.6090686, -0.2524145, 6.251089, -7.3638678, 0, -6.4376974e-07, -3.6819344, 0, 6.3772964, -3.4633372, -0.2524145, 5.998675, -3.6090686, -0.2524145, 6.251089, 3.4633365, -0.2524145, 5.9986753, -3.6090686, -0.2524145, 6.251089, -3.6819344, 0, 6.3772964, 3.609068, -0.2524145, 6.2510896, -3.3904715, -2.5480517e-08, 5.872468, -3.4633372, -0.2524145, 5.998675, 3.3904707, -2.5480517e-08, 5.8724685, -3.6819332, 0, -6.377297, -3.6090674, 0.2524145, -6.2510896, -7.3638678, 0, -6.4376974e-07, -6.9266734, 0.25241446, -6.05549e-07, -3.3904703, -2.5480517e-08, -5.8724685, -6.780942, -2.5480517e-08, -5.9280876e-07, -3.463336, 0.25241446, -5.9986753, -3.3904703, -2.5480517e-08, -5.8724685, -6.9266734, 0.25241446, -6.05549e-07, -3.6090674, 0.2524145, -6.2510896, -3.463336, 0.25241446, -5.9986753, -7.2181363, 0.2524145, -6.3102954e-07, -7.3638678, 0, -6.4376974e-07, -3.6090674, 0.2524145, -6.2510896, -7.2181363, 0.2524145, -6.3102954e-07, -7.2181363, 0.2524145, -6.3102954e-07, -3.463336, 0.25241446, -5.9986753, -6.9266734, 0.25241446, -6.05549e-07, -3.463336, 0.25241446, -5.9986753, 3.3904703, -2.5480517e-08, -5.8724685, -3.3904703, -2.5480517e-08, -5.8724685, -3.6819332, 0, -6.377297, 3.6090674, 0.2524145, -6.2510896, -3.6090674, 0.2524145, -6.2510896, -3.6090674, 0.2524145, -6.2510896, 3.463336, 0.25241446, -5.9986753, -3.463336, 0.25241446, -5.9986753, -7.3638678, 0, -6.4376974e-07, -7.2181363, 0.2524145, -6.3102954e-07, -3.6819344, 0, 6.3772964, -3.4633372, 0.25241446, 5.998675, -6.780942, -2.5480517e-08, -5.9280876e-07, -3.3904715, -2.5480517e-08, 5.872468, -6.9266734, 0.25241446, -6.05549e-07, -6.780942, -2.5480517e-08, -5.9280876e-07, -3.4633372, 0.25241446, 5.998675, -7.2181363, 0.2524145, -6.3102954e-07, -6.9266734, 0.25241446, -6.05549e-07, -3.6090686, 0.2524145, 6.251089, -3.6819344, 0, 6.3772964, -7.2181363, 0.2524145, -6.3102954e-07, -3.6090686, 0.2524145, 6.251089, -3.6090686, 0.2524145, 6.251089, -6.9266734, 0.25241446, -6.05549e-07, -3.4633372, 0.25241446, 5.998675, -3.6819344, 0, 6.3772964, -3.6090686, 0.2524145, 6.251089, 3.6819336, 0, 6.377297, -3.4633372, 0.25241446, 5.998675, -3.3904715, -2.5480517e-08, 5.872468, 3.4633365, 0.25241446, 5.9986753, -3.6090686, 0.2524145, 6.251089, -3.4633372, 0.25241446, 5.998675, 3.609068, 0.2524145, 6.2510896, 3.463336, -0.2524145, -5.9986753, 3.6090674, -0.2524145, -6.2510896, -3.463336, -0.2524145, -5.9986753, 3.6090674, -0.2524145, -6.2510896, 3.6819332, 0, -6.377297, -3.6090674, -0.2524145, -6.2510896, 3.3904703, -2.5480517e-08, -5.8724685, 3.463336, -0.2524145, -5.9986753, -3.3904703, -2.5480517e-08, -5.8724685, 3.463336, -0.2524145, -5.9986753, 7.2181363, -0.2524145, 0, 3.6090674, -0.2524145, -6.2510896, 3.3904703, -2.5480517e-08, -5.8724685, 6.9266734, -0.2524145, 0, 3.463336, -0.2524145, -5.9986753, 6.9266734, -0.2524145, 0, 7.2181363, -0.2524145, 0, 3.463336, -0.2524145, -5.9986753, 7.2181363, -0.2524145, 0, 7.3638678, 0, 0, 3.6090674, -0.2524145, -6.2510896, 3.6090674, -0.2524145, -6.2510896, 7.3638678, 0, 0, 3.6819332, 0, -6.377297, 6.780942, -2.5480517e-08, 0, 6.9266734, -0.2524145, 0, 3.3904703, -2.5480517e-08, -5.8724685, 3.4633365, -0.2524145, 5.9986753, -3.6090686, -0.2524145, 6.251089, 3.609068, -0.2524145, 6.2510896, 3.3904707, -2.5480517e-08, 5.8724685, -3.4633372, -0.2524145, 5.998675, 3.4633365, -0.2524145, 5.9986753, 3.609068, -0.2524145, 6.2510896, -3.6819344, 0, 6.3772964, 3.6819336, 0, 6.377297, 6.9266734, -0.2524145, 0, 3.609068, -0.2524145, 6.2510896, 7.2181363, -0.2524145, 0, 6.780942, -2.5480517e-08, 0, 3.4633365, -0.2524145, 5.9986753, 6.9266734, -0.2524145, 0, 3.4633365, -0.2524145, 5.9986753, 3.609068, -0.2524145, 6.2510896, 6.9266734, -0.2524145, 0, 3.609068, -0.2524145, 6.2510896, 3.6819336, 0, 6.377297, 7.2181363, -0.2524145, 0, 7.2181363, -0.2524145, 0, 3.6819336, 0, 6.377297, 7.3638678, 0, 0, 3.3904707, -2.5480517e-08, 5.8724685, 3.4633365, -0.2524145, 5.9986753, 6.780942, -2.5480517e-08, 0, 3.6819332, 0, -6.377297, 3.6090674, 0.2524145, -6.2510896, -3.6819332, 0, -6.377297, 3.463336, 0.25241446, -5.9986753, 3.3904703, -2.5480517e-08, -5.8724685, -3.463336, 0.25241446, -5.9986753, 3.6090674, 0.2524145, -6.2510896, 3.463336, 0.25241446, -5.9986753, -3.6090674, 0.2524145, -6.2510896, 3.463336, 0.25241446, -5.9986753, 6.780942, -2.5480517e-08, 0, 3.3904703, -2.5480517e-08, -5.8724685, 7.3638678, 0, 0, 7.2181363, 0.2524145, 0, 3.6819332, 0, -6.377297, 3.6819332, 0, -6.377297, 7.2181363, 0.2524145, 0, 3.6090674, 0.2524145, -6.2510896, 3.6090674, 0.2524145, -6.2510896, 6.9266734, 0.25241446, 0, 3.463336, 0.25241446, -5.9986753, 6.9266734, 0.25241446, 0, 6.780942, -2.5480517e-08, 0, 3.463336, 0.25241446, -5.9986753, 7.2181363, 0.2524145, 0, 6.9266734, 0.25241446, 0, 3.6090674, 0.2524145, -6.2510896, 3.4633365, 0.25241446, 5.9986753, -3.3904715, -2.5480517e-08, 5.872468, 3.3904707, -2.5480517e-08, 5.8724685, 3.6819336, 0, 6.377297, -3.6090686, 0.2524145, 6.251089, 3.609068, 0.2524145, 6.2510896, 3.609068, 0.2524145, 6.2510896, -3.4633372, 0.25241446, 5.998675, 3.4633365, 0.25241446, 5.9986753, 6.9266734, 0.25241446, 0, 3.3904707, -2.5480517e-08, 5.8724685, 6.780942, -2.5480517e-08, 0, 3.6819336, 0, 6.377297, 3.609068, 0.2524145, 6.2510896, 7.3638678, 0, 0, 7.3638678, 0, 0, 3.609068, 0.2524145, 6.2510896, 7.2181363, 0.2524145, 0, 7.2181363, 0.2524145, 0, 3.4633365, 0.25241446, 5.9986753, 6.9266734, 0.25241446, 0, 3.4633365, 0.25241446, 5.9986753, 3.3904707, -2.5480517e-08, 5.8724685, 6.9266734, 0.25241446, 0, 3.609068, 0.2524145, 6.2510896, 3.4633365, 0.25241446, 5.9986753, 7.2181363, 0.2524145, 0)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_01cqu"]
+radius = 5.059082
+
+[sub_resource type="Animation" id="Animation_mxdyq"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation:z")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_01cqu"]
+resource_name = "rotate"
+length = 60.0
+loop_mode = 1
+step = 0.1
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation:z")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 6.2831855, -1.6666667, -1.0471976, 0, 0),
+"times": PackedFloat32Array(0, 60)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_flwox"]
+_data = {
+&"RESET": SubResource("Animation_mxdyq"),
+&"rotate": SubResource("Animation_01cqu")
+}
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_wqgn4"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_t38d3"]
+noise_type = 2
+frequency = 0.002
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_v801w"]
+width = 2048
+height = 2048
+noise = SubResource("FastNoiseLite_t38d3")
+seamless = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lfq7p"]
+shader = ExtResource("2_flwox")
+shader_parameter/portal_texture = SubResource("NoiseTexture2D_v801w")
+shader_parameter/portal_tint = Color(1, 1, 1, 1)
+shader_parameter/vortex_effect_radius = 0.499999988824
+shader_parameter/twist_strength = 3.0000000447036
+shader_parameter/pulsation_speed = 0.999999977648
+shader_parameter/breath_magnitude = 0.00999998114994998
+shader_parameter/overall_rotation_speed = 0.0999999530608
+shader_parameter/texture_scroll_speed_x = 0.0499999765304
+shader_parameter/texture_scroll_speed_y = 0.02999997697743994
+shader_parameter/edge_softness = 0.29999999329439997
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_vwpql"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_flwox"]
+frequency = 0.003
+fractal_type = 2
+fractal_octaves = 10
+fractal_gain = 0.7
+fractal_weighted_strength = 0.2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_wqgn4"]
+generate_mipmaps = false
+noise = SubResource("FastNoiseLite_flwox")
+seamless = true
+in_3d_space = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_t38d3"]
+transparency = 1
+shading_mode = 0
+albedo_texture = SubResource("NoiseTexture2D_wqgn4")
+
+[node name="Warp Gate" type="Node3D"]
+script = ExtResource("1_mxdyq")
+station = "<null>"
+
+[node name="Mesh" type="CSGTorus3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
+inner_radius = 6.780942
+outer_radius = 7.363868
+sides = 6
+smooth_faces = false
+material = SubResource("StandardMaterial3D_01cqu")
+
+[node name="Sphere 1" type="CSGSphere3D" parent="Mesh"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, 0)
+material = SubResource("StandardMaterial3D_mxdyq")
+
+[node name="Sphere 2" type="CSGSphere3D" parent="Mesh"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0, 0)
+material = SubResource("StandardMaterial3D_mxdyq")
+
+[node name="Sphere 3" type="CSGSphere3D" parent="Mesh"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.467141, -2.6226832e-07, -6)
+material = SubResource("StandardMaterial3D_mxdyq")
+
+[node name="Sphere 4" type="CSGSphere3D" parent="Mesh"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.532859, -2.6226832e-07, -6)
+material = SubResource("StandardMaterial3D_mxdyq")
+
+[node name="Sphere 5" type="CSGSphere3D" parent="Mesh"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.532859, 2.6226832e-07, 6)
+material = SubResource("StandardMaterial3D_mxdyq")
+
+[node name="Sphere 6" type="CSGSphere3D" parent="Mesh"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.467141, 2.6226832e-07, 6)
+material = SubResource("StandardMaterial3D_mxdyq")
+
+[node name="StaticBody" type="StaticBody3D" parent="."]
+
+[node name="Collision" type="CollisionShape3D" parent="StaticBody"]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
+shape = SubResource("ConcavePolygonShape3D_01cqu")
+
+[node name="Area" type="Area3D" parent="."]
+collision_layer = 0
+collision_mask = 4
+
+[node name="Collision" type="CollisionShape3D" parent="Area"]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0)
+shape = SubResource("CylinderShape3D_01cqu")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_flwox")
+}
+autoplay = "rotate"
+
+[node name="Warp Sprite" type="Sprite3D" parent="."]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 0)
+texture = SubResource("ViewportTexture_wqgn4")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+transparent_bg = true
+size = Vector2i(1024, 1024)
+
+[node name="TextureRect" type="TextureRect" parent="SubViewport"]
+material = SubResource("ShaderMaterial_lfq7p")
+offset_right = 1024.0
+offset_bottom = 1024.0
+texture = SubResource("PlaceholderTexture2D_vwpql")
+
+[node name="Warp Cylinder" type="CSGCylinder3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 7.1216965e-07, -16.292542)
+visible = false
+flip_faces = true
+radius = 7.091797
+height = 32.488647
+sides = 6
+smooth_faces = false
+material = SubResource("StandardMaterial3D_t38d3")
+
+[node name="Destination Marker" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -7.3786917)
+
+[node name="LookAt Marker" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -32)
+
+[connection signal="body_entered" from="Area" to="." method="_on_area_body_entered"]
+[connection signal="body_exited" from="Area" to="." method="_on_area_body_exited"]

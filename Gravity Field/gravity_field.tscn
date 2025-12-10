@@ -25,7 +25,6 @@ metadata/_snap_enabled = true
 
 [node name="Gravity Field" type="Node3D"]
 script = ExtResource("1_uoc06")
-is_constant = null
 
 [node name="Area" type="Area3D" parent="."]
 collision_layer = 8

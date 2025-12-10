@@ -19,6 +19,10 @@ var _gravity_force: float = 9.8
 		field_size = _field_size
 		if Engine.is_editor_hint():
 			collision = $Area/Collision
+			if collision == null:
+				return
+			if particles == null:
+				return
 			particles = $Particles
 			collision.shape = BoxShape3D.new()
 			collision.shape.size = field_size
@@ -48,6 +52,8 @@ var _gravity_force: float = 9.8
 
 var player_object: Node3D
 
+var last_position: Vector3 = Vector3.ZERO
+
 var is_player_inside: bool = false
 
 const MAX_SIZE: Vector3 = Vector3(100, 100, 100)
@@ -57,6 +63,8 @@ const MIN_SIZE: Vector3 = Vector3(1, 1, 1)
 func _ready() -> void:
 	if !is_constant:
 		set_physics_process(false)
+	else:
+		last_position = global_position
 	collision.shape = BoxShape3D.new()
 	particles.mesh = SphereMesh.new()
 	particles.mesh.radius = 0.08
@@ -81,9 +89,11 @@ func _ready() -> void:
 		area.gravity_direction = gravity_direction
 
 
-func _physics_process(_delta: float) -> void:
-	if is_constant and is_player_inside and player_object != null:
+func _process(_delta: float) -> void:
+	if is_constant and is_player_inside and player_object != null and !player_object.is_in_ship:
 		player_object.change_floor(get_up_direction(), true)
+		player_object.position_shift = last_position - global_position
+	last_position = global_position
 
 
 func get_up_direction() -> Vector3:
