@@ -4,40 +4,19 @@ extends Node3D
 @onready var player: Player = $Player
 @onready var spaceship: Spaceship = $Spaceship
 @onready var spaceship_interior: SpaceshipInterior = $"Spaceship Interior"
-@onready var label: Label = $Control/Label
-@onready var asteroids: Node3D = $Asteroids
-@onready var camera: Camera3D = $Camera
 
 
-const ASTEROID = preload("uid://fpevas20cdlo")
-
-
-@export var asteroid_field_size: Vector3 = Vector3.ZERO
-@export var asteroid_negative_field_size: Vector3 = Vector3.ZERO
-@export var asteroid_number: int = 0
-
+var current_station: Station
 var current_ship: RigidBody3D
+
+var warping_to: String
+
+var is_loading: bool = false
 
 
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	for i in asteroid_number:
-		var new_asteroid: Asteroid = ASTEROID.instantiate()
-		var x = randf_range(-asteroid_field_size.x, asteroid_field_size.x)
-		var y = randf_range(-asteroid_field_size.y, asteroid_field_size.y)
-		var z = randf_range(-asteroid_field_size.z, asteroid_field_size.z)
-		var an = asteroid_negative_field_size
-		while (x > -an.x and x < an.x) and (y > -an.y and y < an.y) and (z > -an.z and z < an.z):
-			x = randf_range(-asteroid_field_size.x, asteroid_field_size.x)
-			y = randf_range(-asteroid_field_size.y, asteroid_field_size.y)
-			z = randf_range(-asteroid_field_size.z, asteroid_field_size.z)
-		asteroids.add_child(new_asteroid)
-		new_asteroid.position = Vector3(x, y, z)
-		new_asteroid.set_size(randf_range(0.1, 5.0))
-		var impulse: Vector3 = Vector3(randf(), randf(), randf()).normalized() * randf()
-		var torque: Vector3 = Vector3(randf(), randf(), randf()).normalized() * randf()
-		new_asteroid.apply_impulse(impulse)
-		new_asteroid.apply_torque_impulse(torque)
+	current_station = $"Red Station"
 
 
 func _input(event: InputEvent) -> void:
@@ -51,10 +30,22 @@ func _input(event: InputEvent) -> void:
 
 
 func _process(_delta: float) -> void:
-	label.text = str(player.is_in_gravity) + "\n"
-	label.text += str(player.up_direction) + "\n"
-	label.text += str(player.basis) + "\n"
-	pass
+	if is_loading:
+		var res: Array = []
+		ResourceLoader.load_threaded_get_status(warping_to, res)
+		if res[0] == 1.0:
+			complete_warp()
+
+
+func complete_warp() -> void:
+	is_loading = false
+	var station_scene: PackedScene = ResourceLoader.load_threaded_get(warping_to)
+	var new_station: Station = station_scene.instantiate()
+	current_station.warp_to.disconnect(_on_station_warp_to)
+	add_child(new_station)
+	current_station.queue_free()
+	new_station.warp_to.connect(_on_station_warp_to)
+	current_station = new_station
 
 
 func quit_game() -> void:
@@ -118,3 +109,9 @@ func _on_player_interaction(collider: RID) -> void:
 			pass
 		_:
 			pass
+
+
+func _on_station_warp_to(to_station: NodePath) -> void:
+	ResourceLoader.load_threaded_request(to_station)
+	warping_to = to_station
+	is_loading = true

@@ -1,6 +1,9 @@
 extends Node3D
 
 
+signal initiate_warp(station: NodePath)
+
+
 @onready var warp_sprite: Sprite3D = $"Warp Sprite"
 @onready var warp_cylinder: CSGCylinder3D = $"Warp Cylinder"
 @onready var destination_marker: Marker3D = $"Destination Marker"
@@ -39,16 +42,20 @@ func _process(delta: float) -> void:
 
 
 func start_warp() -> void:
-	print("Warping!")
+	initiate_warp.emit(station)
 
 
 func _on_area_body_entered(body: Node3D) -> void:
-	if body is Spaceship or body is SpaceshipInterior:
+	if body is SpaceshipInterior:
 		warp_cylinder.show()
 		body.linear_velocity = Vector3.ZERO
-		#body.look_at(look_at_marker.global_position)
 		body.set_physics_process(false)
 		get_tree().create_tween().tween_property(body, "global_position", destination_marker.global_position, 0.5).finished.connect(func(): body.look_at(look_at_marker.global_position); start_warp())
+	if body is Spaceship:
+		warp_cylinder.show()
+		body.linear_velocity = Vector3.ZERO
+		body.set_physics_process(false)
+		get_tree().create_tween().tween_property(body, "global_position", destination_marker.global_position, 0.5).finished.connect(func(): body.look_at(warp_sprite.global_position); start_warp())
 
 
 func _on_area_body_exited(body: Node3D) -> void:

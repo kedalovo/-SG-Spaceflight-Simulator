@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://bc4137boy0iro"]
+[gd_scene load_steps=6 format=3 uid="uid://bc4137boy0iro"]
 
-[ext_resource type="Texture2D" uid="uid://b8fkwwsg3pv20" path="res://Resources/Green Nebula.png" id="1_jpreg"]
+[ext_resource type="Script" uid="uid://tiv6o7v10gce" path="res://Stations/Green Station/green_station.gd" id="1_ws4v2"]
+[ext_resource type="Texture2D" uid="uid://b8fkwwsg3pv20" path="res://Resources/Green Nebula.png" id="2_xac3i"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_2n0io"]
-panorama = ExtResource("1_jpreg")
+panorama = ExtResource("2_xac3i")
 energy_multiplier = 1.5
 
 [sub_resource type="Sky" id="Sky_7raqb"]
@@ -16,6 +17,7 @@ tonemap_mode = 2
 glow_enabled = true
 
 [node name="Green Station" type="Node3D"]
+script = ExtResource("1_ws4v2")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.86515146, -0.42060226, 0.27314228, 0, 0.544639, 0.8386706, -0.5015107, 0.7255771, -0.47119522, 0, 0, 0)

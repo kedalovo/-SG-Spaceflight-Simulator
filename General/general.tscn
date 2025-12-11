@@ -1,0 +1,26 @@
+[gd_scene load_steps=6 format=3 uid="uid://47escm43ns8v"]
+
+[ext_resource type="Script" uid="uid://bawx6ngbdc4xx" path="res://General/general.gd" id="1_8u7m0"]
+[ext_resource type="PackedScene" uid="uid://03faniklx1al" path="res://Stations/Red Station/red_station.tscn" id="1_o28ku"]
+[ext_resource type="PackedScene" uid="uid://by5ae6ufoqsbk" path="res://Player/player.tscn" id="2_3lbfq"]
+[ext_resource type="PackedScene" uid="uid://cr4oj6qmhpn0u" path="res://Spaceship/spaceship.tscn" id="3_hxcbn"]
+[ext_resource type="PackedScene" uid="uid://45ojdm5bboee" path="res://Spaceship/spaceship_interior.tscn" id="4_8u7m0"]
+
+[node name="General" type="Node3D"]
+script = ExtResource("1_8u7m0")
+
+[node name="Red Station" parent="." instance=ExtResource("1_o28ku")]
+asteroid_field_size = Vector3(100, 100, 100)
+asteroid_negative_field_size = Vector3(20, 20, 20)
+asteroid_number = 500
+
+[node name="Player" parent="." instance=ExtResource("2_3lbfq")]
+
+[node name="Spaceship" parent="." instance=ExtResource("3_hxcbn")]
+transform = Transform3D(-0.70710677, 0, -0.70710677, 0, 1, 0, 0.70710677, 0, -0.70710677, 0, 2.8912826, -6.193734)
+
+[node name="Spaceship Interior" parent="." instance=ExtResource("4_8u7m0")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -4, 4, 5)
+
+[connection signal="warp_to" from="Red Station" to="." method="_on_station_warp_to"]
+[connection signal="interaction" from="Player" to="." method="_on_player_interaction"]

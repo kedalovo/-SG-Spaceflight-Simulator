@@ -1,15 +1,12 @@
-[gd_scene load_steps=13 format=4 uid="uid://03faniklx1al"]
+[gd_scene load_steps=10 format=4 uid="uid://03faniklx1al"]
 
-[ext_resource type="Script" uid="uid://18rh3nlnrpyn" path="res://Game/game.gd" id="1_7raqb"]
-[ext_resource type="Texture2D" uid="uid://1v2ixgu0pqco" path="res://Resources/Skybox.png" id="1_bk3v5"]
-[ext_resource type="PackedScene" uid="uid://by5ae6ufoqsbk" path="res://Player/player.tscn" id="2_1r4le"]
-[ext_resource type="PackedScene" uid="uid://cr4oj6qmhpn0u" path="res://Spaceship/spaceship.tscn" id="4_jcm6v"]
-[ext_resource type="PackedScene" uid="uid://qc706voncvlu" path="res://Gravity Field/gravity_field.tscn" id="5_fwxkx"]
-[ext_resource type="PackedScene" uid="uid://45ojdm5bboee" path="res://Spaceship/spaceship_interior.tscn" id="6_qmv3x"]
-[ext_resource type="PackedScene" uid="uid://du2i141obae2c" path="res://Warp Gate/warp_gate.tscn" id="7_oomkl"]
+[ext_resource type="Script" uid="uid://18rh3nlnrpyn" path="res://Stations/Red Station/red_station.gd" id="1_5chlv"]
+[ext_resource type="Texture2D" uid="uid://1v2ixgu0pqco" path="res://Resources/Skybox.png" id="1_h27or"]
+[ext_resource type="PackedScene" uid="uid://qc706voncvlu" path="res://Gravity Field/gravity_field.tscn" id="4_x3afj"]
+[ext_resource type="PackedScene" uid="uid://du2i141obae2c" path="res://Warp Gate/warp_gate.tscn" id="6_pnvlb"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_1r4le"]
-panorama = ExtResource("1_bk3v5")
+panorama = ExtResource("1_h27or")
 
 [sub_resource type="Sky" id="Sky_7raqb"]
 sky_material = SubResource("PanoramaSkyMaterial_1r4le")
@@ -34,11 +31,8 @@ _surfaces = [{
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_7raqb"]
 data = PackedVector3Array(-8.924805, -0.14111328, 8.641602, -8.924805, -0.14111328, -8.641602, -8.924805, 0.14111328, -8.641602, 8.924805, -0.14111328, -8.641602, -8.924805, -0.14111328, -8.641602, -8.924805, -0.14111328, 8.641602, -8.924805, 0.14111328, -8.641602, -8.924805, -0.14111328, -8.641602, 8.924805, -0.14111328, -8.641602, -8.924805, 0.14111328, -8.641602, -8.924805, 0.14111328, 8.641602, -8.924805, -0.14111328, 8.641602, -8.924805, -0.14111328, 8.641602, -8.924805, 0.14111328, 8.641602, 8.924805, 0.14111328, 8.641602, 8.924805, 0.14111328, 8.641602, -8.924805, 0.14111328, 8.641602, -8.924805, 0.14111328, -8.641602, -8.924805, -0.14111328, 8.641602, 8.924805, -0.14111328, 8.641602, 8.924805, -0.14111328, -8.641602, 8.924805, 0.14111328, 8.641602, 8.924805, -0.14111328, 8.641602, -8.924805, -0.14111328, 8.641602, 8.924805, -0.14111328, -8.641602, 8.924805, -0.14111328, 8.641602, 8.924805, 0.14111328, 8.641602, 8.924805, -0.14111328, -8.641602, 8.924805, 0.14111328, -8.641602, -8.924805, 0.14111328, -8.641602, -8.924805, 0.14111328, -8.641602, 8.924805, 0.14111328, -8.641602, 8.924805, 0.14111328, 8.641602, 8.924805, 0.14111328, 8.641602, 8.924805, 0.14111328, -8.641602, 8.924805, -0.14111328, -8.641602)
 
-[node name="Game" type="Node3D"]
-script = ExtResource("1_7raqb")
-asteroid_field_size = Vector3(200, 200, 200)
-asteroid_negative_field_size = Vector3(20, 10, 20)
-asteroid_number = 1000
+[node name="Red Station" type="Node3D"]
+script = ExtResource("1_5chlv")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.86515146, -0.42060226, 0.27314228, 0, 0.544639, 0.8386706, -0.5015107, 0.7255771, -0.47119522, 0, 0, 0)
@@ -58,8 +52,6 @@ mesh = SubResource("ArrayMesh_1r4le")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.16875237, 0)
 shape = SubResource("ConcavePolygonShape3D_7raqb")
 
-[node name="Player" parent="." instance=ExtResource("2_1r4le")]
-
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
@@ -71,10 +63,7 @@ layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
 
-[node name="Spaceship" parent="." instance=ExtResource("4_jcm6v")]
-transform = Transform3D(-0.7071067, 0, -0.7071068, 0, 1, 0, 0.7071068, 0, -0.7071067, -0.009091854, 3, -6.130127)
-
-[node name="Gravity Field" parent="." instance=ExtResource("5_fwxkx")]
+[node name="Gravity Field" parent="." instance=ExtResource("4_x3afj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4200878, 0)
 visible = false
 field_size = Vector3(17, 5, 17)
@@ -85,17 +74,15 @@ field_size = Vector3(17, 5, 17)
 transform = Transform3D(-0.78686213, -0.3197283, 0.5278464, 0, 0.85532606, 0.51809007, -0.61712885, 0.40766546, -0.6730237, 4.951391, 4.859874, -6.313208)
 visible = false
 
-[node name="Spaceship Interior" parent="." instance=ExtResource("6_qmv3x")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -4, 3.8080597, 5)
-
-[node name="Warp Gate" parent="." instance=ExtResource("7_oomkl")]
+[node name="Warp Gate" parent="." instance=ExtResource("6_pnvlb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 135.2528, -231.09045)
 warp_color = Color(0, 0.61328125, 0.052703857, 1)
 station = "uid://bc4137boy0iro"
 
-[node name="Warp Gate2" parent="." instance=ExtResource("7_oomkl")]
+[node name="Warp Gate2" parent="." instance=ExtResource("6_pnvlb")]
 transform = Transform3D(-0.50000006, 0, 0.8660254, 0, 1, 0, -0.8660254, 0, -0.50000006, -168.46077, -74.8664, 148.58243)
 warp_color = Color(1, 0.984375, 0, 1)
 station = "uid://dt7xcken43kfl"
 
-[connection signal="interaction" from="Player" to="." method="_on_player_interaction"]
+[connection signal="initiate_warp" from="Warp Gate" to="." method="request_warp"]
+[connection signal="initiate_warp" from="Warp Gate2" to="." method="request_warp"]

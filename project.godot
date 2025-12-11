@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="[SG] Spaceflight Simulator"
-run/main_scene="uid://03faniklx1al"
+run/main_scene="uid://47escm43ns8v"
 config/features=PackedStringArray("4.5", "GL Compatibility")
 config/icon="res://icon.svg"
 
