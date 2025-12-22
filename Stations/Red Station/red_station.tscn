@@ -33,6 +33,7 @@ data = PackedVector3Array(-8.924805, -0.14111328, 8.641602, -8.924805, -0.141113
 
 [node name="Red Station" type="Node3D"]
 script = ExtResource("1_5chlv")
+station_color = Color(1, 0, 0, 1)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.86515146, -0.42060226, 0.27314228, 0, 0.544639, 0.8386706, -0.5015107, 0.7255771, -0.47119522, 0, 0, 0)
@@ -76,12 +77,12 @@ visible = false
 
 [node name="Warp Gate" parent="." instance=ExtResource("6_pnvlb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 135.2528, -231.09045)
-warp_color = Color(0, 0.61328125, 0.052703857, 1)
+warp_color = Color(0, 1, 0, 1)
 station = "uid://bc4137boy0iro"
 
 [node name="Warp Gate2" parent="." instance=ExtResource("6_pnvlb")]
 transform = Transform3D(-0.50000006, 0, 0.8660254, 0, 1, 0, -0.8660254, 0, -0.50000006, -168.46077, -74.8664, 148.58243)
-warp_color = Color(1, 0.984375, 0, 1)
+warp_color = Color(1, 0.9843137, 0, 1)
 station = "uid://dt7xcken43kfl"
 
 [connection signal="initiate_warp" from="Warp Gate" to="." method="request_warp"]

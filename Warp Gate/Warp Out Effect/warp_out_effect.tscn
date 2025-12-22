@@ -1,0 +1,39 @@
+[gd_scene load_steps=5 format=3 uid="uid://6cfsvsikdy02"]
+
+[ext_resource type="Script" uid="uid://d6rwf1lbjsmo" path="res://Warp Gate/Warp Out Effect/warp_out_effect.gd" id="1_mk5v1"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_nbktl"]
+frequency = 0.003
+fractal_type = 2
+fractal_octaves = 10
+fractal_gain = 0.7
+fractal_weighted_strength = 0.2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_mk5v1"]
+generate_mipmaps = false
+noise = SubResource("FastNoiseLite_nbktl")
+seamless = true
+in_3d_space = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bn2kg"]
+transparency = 1
+shading_mode = 0
+albedo_texture = SubResource("NoiseTexture2D_mk5v1")
+
+[node name="Warp Out Effect" type="Node3D"]
+script = ExtResource("1_mk5v1")
+
+[node name="Mesh" type="CSGCylinder3D" parent="."]
+transform = Transform3D(-1, -1.509958e-07, 6.600236e-15, 0, -4.371139e-08, -1, 1.509958e-07, -1, 4.371139e-08, 0, 0, 0)
+flip_faces = true
+radius = 7.091797
+height = 32.488647
+sides = 6
+smooth_faces = false
+material = SubResource("StandardMaterial3D_bn2kg")
+
+[node name="Out Marker" type="Marker3D" parent="."]
+transform = Transform3D(-1, -1.509958e-07, 6.600236e-15, 0, -4.371139e-08, -1, 1.509958e-07, -1, 4.371139e-08, -3.4620655e-21, 0, -12)
+
+[node name="LookAt Marker" type="Marker3D" parent="."]
+transform = Transform3D(-1, -1.509958e-07, 6.600236e-15, 0, -4.371139e-08, -1, 1.509958e-07, -1, 4.371139e-08, 4.039077e-21, 0, 14)

@@ -198,3 +198,11 @@ func toggle_player_mask(on: bool) -> void:
 		get_tree().create_timer(0.1).timeout.connect(func(): call_deferred("set_collision_mask_value", 2, on))
 	else:
 		call_deferred("set_collision_mask_value", 2, on)
+
+
+func toggle_collision(on: bool) -> void:
+	call_deferred("set_collision_layer_value", 3, on)
+	call_deferred("set_collision_mask_value", 1, on)
+	call_deferred("set_collision_mask_value", 2, on)
+	call_deferred("set_collision_mask_value", 4, on)
+	call_deferred("set_collision_mask_value", 5, on)

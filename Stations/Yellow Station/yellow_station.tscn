@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://dt7xcken43kfl"]
+[gd_scene load_steps=7 format=3 uid="uid://dt7xcken43kfl"]
 
 [ext_resource type="Script" uid="uid://d1n5n24d0h024" path="res://Stations/Yellow Station/yellow_station.gd" id="1_31g2w"]
 [ext_resource type="Texture2D" uid="uid://dyw626icejlof" path="res://Resources/Yellow Nebula.png" id="2_vl2qe"]
+[ext_resource type="PackedScene" uid="uid://du2i141obae2c" path="res://Warp Gate/warp_gate.tscn" id="3_vl2qe"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_inuy7"]
 panorama = ExtResource("2_vl2qe")
@@ -17,6 +18,7 @@ glow_enabled = true
 
 [node name="Yellow Station" type="Node3D"]
 script = ExtResource("1_31g2w")
+station_color = Color(1, 0.9843137, 0, 1)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.86515146, -0.42060226, 0.27314228, 0, 0.544639, 0.8386706, -0.5015107, 0.7255771, -0.47119522, 0, 0, 0)
@@ -25,3 +27,8 @@ directional_shadow_max_distance = 200.0
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_mc2cw")
+
+[node name="Warp Gate" parent="." instance=ExtResource("3_vl2qe")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 0)
+warp_color = Color(1, 0, 0, 1)
+station = "uid://03faniklx1al"

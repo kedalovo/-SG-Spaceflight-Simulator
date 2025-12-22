@@ -1,17 +1,24 @@
 extends Node3D
 
 
-signal initiate_warp(station: NodePath)
+class_name WarpGate
+
+
+signal initiate_warp(station: NodePath, gate: WarpGate)
 
 
 @onready var warp_sprite: Sprite3D = $"Warp Sprite"
-@onready var warp_cylinder: CSGCylinder3D = $"Warp Cylinder"
+@onready var warp_in_cylinder: CSGCylinder3D = $"Warp In Cylinder"
 @onready var destination_marker: Marker3D = $"Destination Marker"
 @onready var look_at_marker: Marker3D = $"LookAt Marker"
+@onready var mesh: CSGTorus3D = $Mesh
 
 
 @export_color_no_alpha var warp_color: Color = Color.WHITE
-@export_file() var station
+@export_file() var station: String
+
+
+var was_rotated: bool = false
 
 
 func _ready() -> void:
@@ -31,31 +38,50 @@ func _ready() -> void:
 	new_noise_texture.in_3d_space = true
 	new_material.albedo_texture = new_noise_texture
 	new_material.albedo_color = warp_color
-	warp_cylinder.material = new_material
+	warp_in_cylinder.material = new_material
 	
 	warp_sprite.modulate = warp_color
 
 
 func _process(delta: float) -> void:
-	warp_cylinder.material.uv1_offset.y -= delta * 0.5
-	warp_cylinder.material.uv1_offset.x += delta * 0.1
+	warp_in_cylinder.material.uv1_offset.y -= delta * 0.5
+	warp_in_cylinder.material.uv1_offset.x += delta * 0.1
+	mesh.rotate_z(delta / 4.0)
 
 
 func start_warp() -> void:
-	initiate_warp.emit(station)
+	initiate_warp.emit(station, self)
 
 
 func _on_area_body_entered(body: Node3D) -> void:
 	if body is SpaceshipInterior:
-		warp_cylinder.show()
+		warp_in_cylinder.show()
 		body.linear_velocity = Vector3.ZERO
 		body.set_physics_process(false)
-		get_tree().create_tween().tween_property(body, "global_position", destination_marker.global_position, 0.5).finished.connect(func(): body.look_at(look_at_marker.global_position); start_warp())
+		body.toggle_collision(false)
+		if was_rotated:
+			destination_marker.rotate_object_local(Vector3.UP, deg_to_rad(180))
+			was_rotated = false
+		#get_tree().create_tween().tween_property(body, "global_position", destination_marker.global_position, 0.5).finished.connect(func(): body.look_at(look_at_marker.global_position); start_warp())
+		var tween := get_tree().create_tween()
+		tween.set_parallel()
+		tween.tween_property(body, "global_position", destination_marker.global_position, 1.5).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+		tween.tween_property(body, "global_rotation", destination_marker.global_rotation, 1.5).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+		start_warp()
 	if body is Spaceship:
-		warp_cylinder.show()
+		warp_in_cylinder.show()
 		body.linear_velocity = Vector3.ZERO
 		body.set_physics_process(false)
-		get_tree().create_tween().tween_property(body, "global_position", destination_marker.global_position, 0.5).finished.connect(func(): body.look_at(warp_sprite.global_position); start_warp())
+		body.toggle_collision(false)
+		#get_tree().create_tween().tween_property(body, "global_position", destination_marker.global_position, 0.5).finished.connect(func(): body.look_at(warp_sprite.global_position); start_warp())
+		if !was_rotated:
+			destination_marker.rotate_object_local(Vector3.UP, deg_to_rad(180))
+			was_rotated = true
+		var tween := get_tree().create_tween()
+		tween.set_parallel()
+		tween.tween_property(body, "global_position", destination_marker.global_position, 1.5).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+		tween.tween_property(body, "global_rotation", destination_marker.global_rotation, 1.5).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+		start_warp()
 
 
 func _on_area_body_exited(body: Node3D) -> void:

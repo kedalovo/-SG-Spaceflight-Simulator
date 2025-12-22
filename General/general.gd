@@ -6,8 +6,14 @@ extends Node3D
 @onready var spaceship_interior: SpaceshipInterior = $"Spaceship Interior"
 
 
+const WARP_OUT_EFFECT = preload("uid://6cfsvsikdy02")
+
+
 var current_station: Station
 var current_ship: RigidBody3D
+
+var current_gate: WarpGate
+var picked_gate: WarpGate
 
 var warping_to: String
 
@@ -34,18 +40,37 @@ func _process(_delta: float) -> void:
 		var res: Array = []
 		ResourceLoader.load_threaded_get_status(warping_to, res)
 		if res[0] == 1.0:
-			complete_warp()
+			begin_warp()
 
 
-func complete_warp() -> void:
+func begin_warp() -> void:
+	print_debug("Finished loading new station")
 	is_loading = false
 	var station_scene: PackedScene = ResourceLoader.load_threaded_get(warping_to)
 	var new_station: Station = station_scene.instantiate()
-	current_station.warp_to.disconnect(_on_station_warp_to)
 	add_child(new_station)
+	for i in get_tree().get_nodes_in_group(&"warp_gates"):
+		if ResourceLoader.get_resource_uid(i.station) == ResourceLoader.get_resource_uid(current_station.get_station_path(current_station)):
+			picked_gate = i
+			break
+	if picked_gate == null:
+		push_error("Could not find warp gate with path ", warping_to)
+	current_station.warp_to.disconnect(_on_station_warp_to)
+	
+	#START HERE. Need to figure out after warp procedure of fading in the new tube seamlessly and then fading it out. Make the ship a child of the tube.
+	
+	await get_tree().create_timer(1.5).timeout
+	var new_warp_tube: Node3D = WARP_OUT_EFFECT.instantiate()
+	new_warp_tube.mesh.material.albedo_color = new_station.station_color
+	new_warp_tube.global_rotation = current_gate.global_rotation
+	new_warp_tube.global_position = current_gate.global_position
 	current_station.queue_free()
+	current_ship.global_position = picked_gate.warp_out_marker.global_position
+	current_ship.look_at(picked_gate.warp_out_look_at_marker.global_position)
 	new_station.warp_to.connect(_on_station_warp_to)
 	current_station = new_station
+	current_ship.set_physics_process(true)
+	print_debug("Finished warping")
 
 
 func quit_game() -> void:
@@ -111,7 +136,9 @@ func _on_player_interaction(collider: RID) -> void:
 			pass
 
 
-func _on_station_warp_to(to_station: NodePath) -> void:
+func _on_station_warp_to(to_station: NodePath, from_gate: WarpGate) -> void:
 	ResourceLoader.load_threaded_request(to_station)
 	warping_to = to_station
+	current_gate = from_gate
 	is_loading = true
+	print_debug("Started loading new station")
