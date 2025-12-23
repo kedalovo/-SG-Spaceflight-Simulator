@@ -12,6 +12,8 @@ signal initiate_warp(station: NodePath, gate: WarpGate)
 @onready var destination_marker: Marker3D = $"Destination Marker"
 @onready var look_at_marker: Marker3D = $"LookAt Marker"
 @onready var mesh: CSGTorus3D = $Mesh
+@onready var warp_out_marker: Marker3D = $"Warp Out Marker"
+@onready var warp_out_look_at_marker: Marker3D = $"Warp Out LookAt Marker"
 
 
 @export_color_no_alpha var warp_color: Color = Color.WHITE
@@ -51,6 +53,16 @@ func _process(delta: float) -> void:
 
 func start_warp() -> void:
 	initiate_warp.emit(station, self)
+
+
+func appear() -> void:
+	var tween: Tween = get_tree().create_tween()
+	tween.tween_property(warp_in_cylinder, "material:albedo_color", Color(mesh.material.albedo_color, 1.0), 3.0)
+
+
+func disappear() -> void:
+	var tween: Tween = get_tree().create_tween()
+	tween.tween_property(warp_in_cylinder, "material:albedo_color", Color(mesh.material.albedo_color, 0.0), 3.0)
 
 
 func _on_area_body_entered(body: Node3D) -> void:

@@ -17,7 +17,6 @@ var current_ship: RigidBody3D
 
 
 func _ready() -> void:
-	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	for i in asteroid_number:
 		var new_asteroid: Asteroid = ASTEROID.instantiate()
 		var x = randf_range(-asteroid_field_size.x, asteroid_field_size.x)
