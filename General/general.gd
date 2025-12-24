@@ -4,6 +4,8 @@ extends Node3D
 @onready var player: Player = $Player
 @onready var spaceship: Spaceship = $Spaceship
 @onready var spaceship_interior: SpaceshipInterior = $"Spaceship Interior"
+@onready var label: Label = $Control/VBoxContainer/Label
+@onready var label_2: Label = $Control/VBoxContainer/Label2
 
 
 const WARP_OUT_EFFECT = preload("uid://6cfsvsikdy02")
@@ -36,6 +38,9 @@ func _input(event: InputEvent) -> void:
 
 
 func _process(_delta: float) -> void:
+	label.text = player.anim_playback.get_current_node()
+	label_2.text = str(player.up_marker.global_position - player.global_position)
+	
 	if is_loading:
 		var res: Array = []
 		ResourceLoader.load_threaded_get_status(warping_to, res)
@@ -77,6 +82,7 @@ func begin_warp() -> void:
 	current_station = new_station
 	current_ship.set_physics_process(true)
 	current_ship.toggle_collision(true)
+	current_ship.push_ship_forward()
 	print_debug("Finished warping")
 
 

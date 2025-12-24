@@ -137,7 +137,7 @@ smooth_faces = false
 material = SubResource("StandardMaterial3D_t38d3")
 
 [node name="Destination Marker" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -7.3786917)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -8.378692)
 
 [node name="LookAt Marker" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -32)

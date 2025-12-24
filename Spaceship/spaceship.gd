@@ -206,3 +206,7 @@ func toggle_collision(on: bool) -> void:
 	call_deferred("set_collision_mask_value", 2, on)
 	call_deferred("set_collision_mask_value", 4, on)
 	call_deferred("set_collision_mask_value", 5, on)
+
+
+func push_ship_forward() -> void:
+	apply_central_impulse((front_marker.global_position - global_position) * SPEED * mass)
