@@ -4,7 +4,7 @@
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_0pgl3"]
 
-[node name="Asteroid" type="RigidBody3D"]
+[node name="Asteroid" type="RigidBody3D" groups=["asteroids"]]
 collision_layer = 16
 collision_mask = 31
 can_sleep = false

@@ -7,8 +7,13 @@ extends Node3D
 @onready var label: Label = $Control/VBoxContainer/Label
 @onready var label_2: Label = $Control/VBoxContainer/Label2
 
+@onready var noise_size: int = 64
+@onready var noise_modifier: int = 10
+@onready var asteroid_field_offset: Vector3 = Vector3(-noise_size, -noise_size, -noise_size) * noise_modifier / 2
+
 
 const WARP_OUT_EFFECT = preload("uid://6cfsvsikdy02")
+const ASTEROID = preload("uid://fpevas20cdlo")
 
 
 var current_station: Station
@@ -19,12 +24,15 @@ var picked_gate: WarpGate
 
 var warping_to: String
 
+
 var is_loading: bool = false
 
 
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	current_station = $"Red Station"
+	
+	generate_asteroids()
 
 
 func _input(event: InputEvent) -> void:
@@ -46,6 +54,37 @@ func _process(_delta: float) -> void:
 		ResourceLoader.load_threaded_get_status(warping_to, res)
 		if res[0] == 1.0:
 			begin_warp()
+
+
+func generate_asteroids() -> void:
+	var texture := NoiseTexture3D.new()
+	texture.depth = noise_size
+	texture.height = noise_size
+	texture.width = noise_size
+	var noise := FastNoiseLite.new()
+	noise.frequency = 0.1
+	noise.noise_type = FastNoiseLite.TYPE_CELLULAR
+	noise.seed = 18
+	texture.noise = noise
+	
+	await texture.changed
+	var z := 0
+	for i in texture.get_data():
+		for x in texture.width:
+			for y in texture.height:
+				if i.get_pixel(x, y).get_luminance() > 0.8:
+					var random_offset := Vector3(randf(), randf(), randf()) * 5
+					spawn_asteroid(2.0 * i.get_pixel(x, y).get_luminance(), Vector3(x, y, z) * noise_modifier + asteroid_field_offset + random_offset, Vector3(randf(), randf(), randf()).normalized() * randf(), Vector3(randf(), randf(), randf()).normalized() * randf())
+		z += 1
+
+
+func spawn_asteroid(size: float, asteroid_position: Vector3, impulse: Vector3, torque: Vector3) -> void:
+	var new_asteroid: Asteroid = ASTEROID.instantiate()
+	current_station.add_child(new_asteroid)
+	new_asteroid.position = asteroid_position
+	new_asteroid.set_size(size)
+	new_asteroid.apply_impulse(impulse)
+	new_asteroid.apply_torque_impulse(torque)
 
 
 func begin_warp() -> void:
@@ -80,6 +119,7 @@ func begin_warp() -> void:
 	new_warp_tube.disappear()
 	new_station.warp_to.connect(_on_station_warp_to)
 	current_station = new_station
+	generate_asteroids()
 	current_ship.set_physics_process(true)
 	current_ship.toggle_collision(true)
 	current_ship.push_ship_forward()

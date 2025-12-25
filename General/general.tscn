@@ -1,10 +1,19 @@
-[gd_scene load_steps=6 format=3 uid="uid://47escm43ns8v"]
+[gd_scene load_steps=8 format=3 uid="uid://47escm43ns8v"]
 
 [ext_resource type="Script" uid="uid://bawx6ngbdc4xx" path="res://General/general.gd" id="1_8u7m0"]
 [ext_resource type="PackedScene" uid="uid://03faniklx1al" path="res://Stations/Red Station/red_station.tscn" id="1_o28ku"]
 [ext_resource type="PackedScene" uid="uid://by5ae6ufoqsbk" path="res://Player/player.tscn" id="2_3lbfq"]
 [ext_resource type="PackedScene" uid="uid://cr4oj6qmhpn0u" path="res://Spaceship/spaceship.tscn" id="3_hxcbn"]
 [ext_resource type="PackedScene" uid="uid://45ojdm5bboee" path="res://Spaceship/spaceship_interior.tscn" id="4_8u7m0"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_8u7m0"]
+noise_type = 2
+frequency = 0.1
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_vck1o"]
+width = 64
+height = 64
+noise = SubResource("FastNoiseLite_8u7m0")
 
 [node name="General" type="Node3D"]
 script = ExtResource("1_8u7m0")
@@ -38,6 +47,20 @@ layout_mode = 2
 
 [node name="Label2" type="Label" parent="Control/VBoxContainer"]
 layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="Control"]
+visible = false
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -140.0
+offset_top = -140.0
+grow_horizontal = 0
+grow_vertical = 0
+texture = SubResource("NoiseTexture2D_vck1o")
 
 [connection signal="warp_to" from="Red Station" to="." method="_on_station_warp_to"]
 [connection signal="interaction" from="Player" to="." method="_on_player_interaction"]
