@@ -63,6 +63,7 @@ var is_controlled: bool = false
 var is_free_looking: bool = false
 var is_in_gravity: bool = true
 var is_external_camera: bool = false
+var is_player_inside: bool = false
 
 var has_started_sprint: bool = false
 var has_started_forward: bool = false
